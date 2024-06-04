@@ -4,7 +4,7 @@ function UserInfo() {
   return (
     <div className="user-info">
       <div className="info-img img-fit-cover">
-        <img src={personsImage.person_one} alt="profile" />
+        <img src={personsImage.user_img} alt="profile" />
       </div>
       <span className="info-name">Wei</span>
     </div>

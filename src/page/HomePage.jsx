@@ -10,12 +10,8 @@ function HomePage() {
     <div className="main-content-holder">
       <div className="content-grid-one">
         <FinancialChart />
-        <div className="grid-two-item">
-          <div className="subgrid-two">
-            <CurrentIncome />
-            <CurrentExpenditure />
-          </div>
-        </div>
+        <CurrentIncome />
+        <CurrentExpenditure />
       </div>
       <div className="content-grid-two">
         <CustomerReserve />

@@ -1,11 +1,11 @@
-/* Home Page */
+/* Home Page Layout */
 .main-content-holder {
   display: grid;
   row-gap: 20px;
 }
 .content-grid-one {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 2fr 1fr 1fr;
   column-gap: 16px;
 }
 .content-grid-two {

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Header from "../../component/Header";
 import HomePage from "../../page/HomePage";
 import Customers from "../../page/Customers";
@@ -12,16 +12,15 @@ function MainContent() {
   return (
     <div className="main-content">
       <Header />
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<HomePage />} />
-          <Route path="customers" element={<Customers />} />
-          <Route path="catalog" element={<Catalog />} />
-          <Route path="sales_details" element={<SalesDetails />} />
-          <Route path="calander" element={<Calander />} />
-          <Route path="financial_state" element={<FinancialState />} />
-        </Routes>
-      </BrowserRouter>
+
+      <Routes>
+        <Route index element={<HomePage />} />
+        <Route path="customers" element={<Customers />} />
+        <Route path="catalog" element={<Catalog />} />
+        <Route path="sales_details" element={<SalesDetails />} />
+        <Route path="calander" element={<Calander />} />
+        <Route path="financial_state" element={<FinancialState />} />
+      </Routes>
     </div>
   );
 }
