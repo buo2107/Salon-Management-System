@@ -1,0 +1,46 @@
+.testimonials {
+  row-gap: 4.8rem;
+  column-gap: 8rem;
+}
+
+.testimonial {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  background: linear-gradient(
+      114.07deg,
+      rgba(103, 86, 76, 0.6) 3.49%,
+      rgba(116, 104, 97, 0) 34.7%
+    ),
+    linear-gradient(138.58deg, rgba(59, 43, 30, 0.37) 43.56%, #fea767 112.68%);
+  border-radius: 10px;
+  padding: 1.2rem;
+
+  align-items: center;
+  box-shadow: 1.2rem 1.6rem rgba(0, 0, 0, 0.075);
+}
+
+.testimonial-img {
+  width: 6.4rem;
+  border-radius: 50%;
+  justify-self: center;
+}
+
+.customer-info {
+  /* padding-left: 1.2rem; */
+}
+
+.testimonial-name {
+  font-size: 2rem;
+  color: #c7c4c6;
+  letter-spacing: 1rem;
+
+  margin-bottom: 1.2rem;
+}
+
+.phone-number {
+  font-size: 1.6rem;
+  font-weight: 600;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: #040d12;
+}

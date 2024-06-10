@@ -1,4 +1,5 @@
 import { personsImage } from "../../utils/image";
+import "./UserInfo.css";
 
 function UserInfo() {
   return (

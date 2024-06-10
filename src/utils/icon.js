@@ -16,6 +16,8 @@ import search from "../assets/icons/search.svg";
 import user from "../assets/icons/user.svg";
 import wallet from "../assets/icons/wallet.svg";
 import wealth from "../assets/icons/wealth.svg";
+import person from "../assets/icons/person-add-sharp.svg";
+import phone from "../assets/icons/phone.svg";
 
 export const iconsImgs = {
   alert,
@@ -35,4 +37,6 @@ export const iconsImgs = {
   user,
   wallet,
   wealth,
+  person,
+  phone,
 };
