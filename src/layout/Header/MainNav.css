@@ -20,21 +20,33 @@
 }
 
 .main-nav-link:hover,
-.main-nav-link:active {
+.main-nav-link.active {
   color: var(--clr-accent);
 }
 
-.main-nav-link.nav-cta:link,
-.main-nav-link.nav-cta:visited {
-  padding: 1.2rem 2.4rem;
+.main-nav-link.active {
+  padding: 1.2rem;
   border-radius: 9px;
-  color: #fff;
+  color: var(--clr-accent-light);
   background-color: var(--clr-accent);
 }
 
-.main-nav-link.nav-cta:hover,
-.main-nav-link.nav-cta:active {
+.main-nav-link.nav-home:link,
+.main-nav-link.nav-home:visited {
+  padding: 1.2rem;
+  border-radius: 100%;
+  border: 1px solid var(--clr-accent);
+  /* color: #fff;
+  background-color: var(--clr-accent); */
+}
+
+.main-nav-link.nav-home:hover,
+.main-nav-link.nav-home.active {
   background-color: var(--clr-accent-dark);
+}
+
+.nav-link-icon {
+  width: 3.2rem;
 }
 
 /* MOBILE */

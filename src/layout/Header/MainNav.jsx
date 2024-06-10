@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { iconsImgs } from "../../utils/icon";
 import "./MainNav.css";
 
 function MainNav() {
@@ -31,8 +32,8 @@ function MainNav() {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/" className="main-nav-link  nav-cta">
-            Home
+          <NavLink to="/" className="main-nav-link nav-home nav-cta">
+            <img className="nav-link-icon" src={iconsImgs.home} alt="home" />
           </NavLink>
         </li>
       </ul>
