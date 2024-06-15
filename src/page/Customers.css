@@ -1,4 +1,14 @@
+/* .section-customer {
+  align-items: center;
+} */
 .section-heading {
-  margin: 3.2rem 0;
-  padding: 0 4.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 3.6rem auto;
+}
+
+.add-icon {
+  width: 2.4rem;
+  height: 2.4rem;
 }

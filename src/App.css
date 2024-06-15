@@ -108,6 +108,7 @@ body {
   color: #555;
   min-height: 100vh;
   background-color: var(--clr-primary-dark);
+  transition: all 0.3s;
 
   /* Only works if there is nothing absolutely positioned in relation to body */
   overflow-x: hidden;
@@ -150,6 +151,9 @@ body {
   grid-template-columns: repeat(4, 1fr);
 }
 
+.grid--2-rows {
+  grid-template-rows: repeat(2, 1fr);
+}
 /* .grid--5-cols {
   grid-template-columns: repeat(5, 1fr);
 } */
@@ -203,7 +207,6 @@ body {
   font-weight: 500;
   color: var(--clr-accent-dark);
   text-transform: uppercase;
-  margin-bottom: 1.6rem;
   letter-spacing: 0.75px;
 }
 
@@ -308,6 +311,21 @@ body {
   outline: none;
   box-shadow: 0 0 0 0.8rem rgba(230, 125, 34, 0.5);
 } */
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 5px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--clr-primary-dark);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--clr-primary-light);
+  border-radius: 20px;
+  /* border: 3px solid orange; */
+}
 
 /* HELPER/SETTINGS CLASSES */
 .margin-right-sm {
