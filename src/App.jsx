@@ -21,7 +21,6 @@ import {
   Container,
   Avatar,
 } from "@chakra-ui/react";
-import { personsImage } from "./utils/image";
 import HeaderNav from "./layout/HeaderNav";
 
 function App() {
