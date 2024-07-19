@@ -54,7 +54,7 @@ function NavigationBar() {
 function HeaderNav() {
   return (
     <Flex
-      p={5}
+      p={3}
       px={10}
       align={"center"}
       bg="rgba(255, 255, 255, 0.93)"

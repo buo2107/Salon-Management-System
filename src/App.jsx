@@ -25,21 +25,19 @@ import HeaderNav from "./layout/HeaderNav";
 
 function App() {
   return (
-    // <BrowserRouter>
-    //   <Header />
-
-    //   {/* Main Content */}
-    //   <Routes>
-    //     <Route index element={<HomePage />} />
-    //     <Route path="customers" element={<Customers />} />
-    //     <Route path="product_catalog" element={<Catalog />} />
-    //     <Route path="sales_details" element={<SalesDetails />} />
-    //     <Route path="calander" element={<Calander />} />
-    //     <Route path="financial_state" element={<FinancialState />} />
-    //   </Routes>
-    // </BrowserRouter>
     <BrowserRouter>
       <HeaderNav />
+
+      <Box as="section" h="100%" px={24} py={8} overflow={"hidden"}>
+        <Routes>
+          <Route index element={<HomePage />} />
+          <Route path="customers" element={<Customers />} />
+          <Route path="product_catalog" element={<Catalog />} />
+          <Route path="sales_details" element={<SalesDetails />} />
+          <Route path="calander" element={<Calander />} />
+          <Route path="financial_state" element={<FinancialState />} />
+        </Routes>
+      </Box>
     </BrowserRouter>
   );
 }
