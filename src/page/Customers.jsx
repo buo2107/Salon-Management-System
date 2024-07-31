@@ -1,4 +1,3 @@
-import "./Customers.css";
 import { personsImage } from "../utils/image";
 import { iconsImgs } from "../utils/icon";
 import CustomerCard from "../component/CustomerCard";
@@ -27,7 +26,7 @@ import { AddIcon, EditIcon, ViewIcon } from "@chakra-ui/icons";
 function Customers() {
   return (
     <>
-      <Flex direction={"row"}>
+      <Flex direction={"row"} justify="center">
         {/* Customer list area */}
         <Box>
           {/* List header */}
@@ -76,10 +75,12 @@ function Customers() {
           </Wrap>
         </Box>
 
-        <Spacer />
+        {/* <Spacer /> */}
 
         {/* Customer detailed data area */}
-        <Box>add</Box>
+        <Box w="50vw" bg="yellow">
+          add
+        </Box>
       </Flex>
     </>
   );

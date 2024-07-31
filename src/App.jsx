@@ -30,12 +30,12 @@ function App() {
 
       <Box as="section" h="100%" px={24} py={8} overflow={"hidden"}>
         <Routes>
-          <Route index element={<HomePage />} />
+          <Route index path="home" element={<HomePage />} />
           <Route path="customers" element={<Customers />} />
-          <Route path="product_catalog" element={<Catalog />} />
-          <Route path="sales_details" element={<SalesDetails />} />
+          <Route path="product" element={<Catalog />} />
+          <Route path="sales" element={<SalesDetails />} />
           <Route path="calander" element={<Calander />} />
-          <Route path="financial_state" element={<FinancialState />} />
+          <Route path="financial" element={<FinancialState />} />
         </Routes>
       </Box>
     </BrowserRouter>
