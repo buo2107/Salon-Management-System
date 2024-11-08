@@ -96,20 +96,24 @@ const GlobalStyles = createGlobalStyle`
   }
 
   /* Indigo */
-  --color-brand-50: #eef2ff;
-  --color-brand-100: #e0e7ff;
-  --color-brand-200: #c7d2fe;
-  --color-brand-500: #6366f1;
-  --color-brand-600: #4f46e5;
-  --color-brand-700: #4338ca;
-  --color-brand-800: #3730a3;
-  --color-brand-900: #312e81;
+  --color-brand-50: #e7e8fd;
+  --color-brand-100: #d0d0fb;
+  --color-brand-200: #a0a2f8;
+  --color-brand-300: #7173f4;
+  --color-brand-400: #4144f1;
+  --color-brand-500: #1216ed;
+  --color-brand-600: #0e11be;
+  --color-brand-700: #0b0d8e;
+  --color-brand-800: #07095f;
+  --color-brand-900: #04042f;
+  --color-brand-950: #020218;
 
   --border-radius-tiny: 3px;
   --border-radius-sm: 5px;
   --border-radius-md: 7px;
   --border-radius-lg: 9px;
 
+  
 }
 
 *,

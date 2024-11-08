@@ -1,5 +1,12 @@
+import Button from "../ui/Button";
+
 function Dashboard() {
-  return <div>Dashboard</div>;
+  return (
+    <div>
+      Dashboard
+      <Button>ddd</Button>
+    </div>
+  );
 }
 
 export default Dashboard;
