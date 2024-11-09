@@ -1,5 +1,12 @@
+import Heading from "../ui/Heading";
+import LayoutRow from "../ui/LayoutRow";
+
 function AccountingLedger() {
-  return <div>Accounting Ledger</div>;
+  return (
+    <LayoutRow>
+      <Heading as="h1">記帳本</Heading>
+    </LayoutRow>
+  );
 }
 
 export default AccountingLedger;
