@@ -87,9 +87,9 @@ function MainNav() {
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/transcations">
+          <StyledNavLink to="/accountingLedger">
             <HiOutlineCurrencyDollar />
-            <span>Transcations</span>
+            <span>Ledger</span>
           </StyledNavLink>
         </li>
         <li>

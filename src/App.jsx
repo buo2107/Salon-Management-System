@@ -8,8 +8,8 @@ import Settings from "./pages/Settings";
 import Users from "./pages/Users";
 import Guests from "./pages/Guests";
 import Login from "./pages/Login";
-import Transcations from "./pages/Transcations";
-import Transcation from "./pages/Transcation";
+import AccountingLedger from "./pages/AccountingLedger";
+import Ledger from "./pages/Ledger";
 import GlobalStyles from "./styles/GlobalStyles";
 import PageNotFound from "./pages/PageNotFound";
 
@@ -27,11 +27,8 @@ function App() {
             <Route path="products/:productId" element={<Product />} />
             <Route path="guests" element={<Guests />} />
             <Route path="users" element={<Users />} />
-            <Route path="transcations" element={<Transcations />} />
-            <Route
-              path="transcations/:transcationId"
-              element={<Transcation />}
-            />
+            <Route path="accountingLedger" element={<AccountingLedger />} />
+            <Route path="accountingLedger/:ledgerId" element={<Ledger />} />
             <Route path="settings" element={<Settings />} />
           </Route>
           <Route path="login" element={<Login />} />
