@@ -2,13 +2,10 @@ import {
   HiOutlineCurrencyDollar,
   HiOutlineHome,
   HiOutlineScissors,
-  HiOutlineUserCircle,
   HiOutlineUserGroup,
-} from "react-icons/hi";
-import {
+  HiOutlineAdjustmentsHorizontal,
   HiOutlineCalendarDays,
-  HiOutlineClipboardDocumentList,
-  HiOutlineCog8Tooth,
+  HiOutlineUserPlus,
 } from "react-icons/hi2";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
@@ -16,7 +13,7 @@ import styled from "styled-components";
 const NavList = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 1.2rem;
 `;
 
 const StyledNavLink = styled(NavLink)`
@@ -40,7 +37,7 @@ const StyledNavLink = styled(NavLink)`
   &.active:visited {
     color: var(--color-grey-800);
     background-color: var(--color-grey-50);
-    border-radius: var(--border-radius-sm);
+    border-radius: var(--border-radius-full);
   }
 
   & svg {
@@ -65,43 +62,43 @@ function MainNav() {
         <li>
           <StyledNavLink to="/dashboard">
             <HiOutlineHome />
-            <span>Home</span>
+            <span>儀錶板</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/bookings">
             <HiOutlineCalendarDays />
-            <span>Bookings</span>
+            <span>預約/臨時</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/products">
             <HiOutlineScissors />
-            <span>Products</span>
+            <span>服務項目</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/guests">
             <HiOutlineUserGroup />
-            <span>Guests</span>
+            <span>客戶資料</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/accountingLedger">
             <HiOutlineCurrencyDollar />
-            <span>Ledger</span>
+            <span>記帳本</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/users">
-            <HiOutlineUserCircle />
-            <span>Users</span>
+            <HiOutlineUserPlus />
+            <span>新增員工</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/settings">
-            <HiOutlineCog8Tooth />
-            <span>Settings</span>
+            <HiOutlineAdjustmentsHorizontal />
+            <span>設定</span>
           </StyledNavLink>
         </li>
       </NavList>
