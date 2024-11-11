@@ -10,14 +10,13 @@ import Guests from "./pages/Guests";
 import Login from "./pages/Login";
 import AccountingLedger from "./pages/AccountingLedger";
 import Ledger from "./pages/Ledger";
-import GlobalStyles from "./styles/GlobalStyles";
 import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   return (
     <>
-      <GlobalStyles />
-      <BrowserRouter>
+      <AppLayout />
+      {/* <BrowserRouter>
         <Routes>
           <Route element={<AppLayout />}>
             <Route index element={<Navigate replace to="dashboard" />} />
@@ -34,7 +33,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
     </>
   );
 }

@@ -1,275 +1,259 @@
-/*
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-  href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-  rel="stylesheet"
-/>
-<link
-  href="https://fonts.googleapis.com/css2?family=Sono:wght@400;500;600&display=swap"
-  rel="stylesheet"
-/>
-*/
+// /* Colors adapted from https://tailwindcss.com/docs/customizing-colors */
+// // import { createGlobalStyle } from "styled-components";
 
-/* Colors adapted from https://tailwindcss.com/docs/customizing-colors */
-import { createGlobalStyle } from "styled-components";
+// const GlobalStyles = createGlobalStyle`
+// :root {
 
-const GlobalStyles = createGlobalStyle`
-:root {
+//   &, &.light-mode{
+//     /* Grey */
+//     --color-grey-0: #fff;
+//     --color-grey-50: #f9fafb;
+//     --color-grey-100: #f3f4f6;
+//     --color-grey-200: #e5e7eb;
+//     --color-grey-300: #d1d5db;
+//     --color-grey-400: #9ca3af;
+//     --color-grey-500: #6b7280;
+//     --color-grey-600: #4b5563;
+//     --color-grey-700: #374151;
+//     --color-grey-800: #1f2937;
+//     --color-grey-900: #111827;
 
-  &, &.light-mode{
-    /* Grey */
-    --color-grey-0: #fff;
-    --color-grey-50: #f9fafb;
-    --color-grey-100: #f3f4f6;
-    --color-grey-200: #e5e7eb;
-    --color-grey-300: #d1d5db;
-    --color-grey-400: #9ca3af;
-    --color-grey-500: #6b7280;
-    --color-grey-600: #4b5563;
-    --color-grey-700: #374151;
-    --color-grey-800: #1f2937;
-    --color-grey-900: #111827;
+//     --color-blue-100: #e0f2fe;
+//     --color-blue-700: #0369a1;
+//     --color-green-100: #dcfce7;
+//     --color-green-700: #15803d;
+//     --color-yellow-100: #fef9c3;
+//     --color-yellow-700: #a16207;
+//     --color-silver-100: #e5e7eb;
+//     --color-silver-700: #374151;
+//     --color-indigo-100: #e0e7ff;
+//     --color-indigo-700: #4338ca;
 
+//     --color-red-100: #fee2e2;
+//     --color-red-700: #b91c1c;
+//     --color-red-800: #991b1b;
 
-    --color-blue-100: #e0f2fe;
-    --color-blue-700: #0369a1;
-    --color-green-100: #dcfce7;
-    --color-green-700: #15803d;
-    --color-yellow-100: #fef9c3;
-    --color-yellow-700: #a16207;
-    --color-silver-100: #e5e7eb;
-    --color-silver-700: #374151;
-    --color-indigo-100: #e0e7ff;
-    --color-indigo-700: #4338ca;
+//     --backdrop-color: rgba(255, 255, 255, 0.1);
 
-    --color-red-100: #fee2e2;
-    --color-red-700: #b91c1c;
-    --color-red-800: #991b1b;
+//     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+//     --shadow-md: 0px 0.6rem 2.4rem rgba(0, 0, 0, 0.06);
+//     --shadow-lg: 0 2.4rem 3.2rem rgba(0, 0, 0, 0.12);
 
-    --backdrop-color: rgba(255, 255, 255, 0.1);
+//     --image-grayscale: 0;
+//     --image-opacity: 100%;
+//   }
 
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-    --shadow-md: 0px 0.6rem 2.4rem rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 2.4rem 3.2rem rgba(0, 0, 0, 0.12);
+//   &.dark-mode {
+//     /* FOR DARK MODE */
+//     --color-grey-0: #18212f;
+//     --color-grey-50: #111827;
+//     --color-grey-100: #1f2937;
+//     --color-grey-200: #374151;
+//     --color-grey-300: #4b5563;
+//     --color-grey-400: #6b7280;
+//     --color-grey-500: #9ca3af;
+//     --color-grey-600: #d1d5db;
+//     --color-grey-700: #e5e7eb;
+//     --color-grey-800: #f3f4f6;
+//     --color-grey-900: #f9fafb;
 
-    --image-grayscale: 0;
-    --image-opacity: 100%;
-  }
+//     --color-blue-100: #075985;
+//     --color-blue-700: #e0f2fe;
+//     --color-green-100: #166534;
+//     --color-green-700: #dcfce7;
+//     --color-yellow-100: #854d0e;
+//     --color-yellow-700: #fef9c3;
+//     --color-silver-100: #374151;
+//     --color-silver-700: #f3f4f6;
+//     --color-indigo-100: #3730a3;
+//     --color-indigo-700: #e0e7ff;
 
-  &.dark-mode {
-    /* FOR DARK MODE */
-    --color-grey-0: #18212f;
-    --color-grey-50: #111827;
-    --color-grey-100: #1f2937;
-    --color-grey-200: #374151;
-    --color-grey-300: #4b5563;
-    --color-grey-400: #6b7280;
-    --color-grey-500: #9ca3af;
-    --color-grey-600: #d1d5db;
-    --color-grey-700: #e5e7eb;
-    --color-grey-800: #f3f4f6;
-    --color-grey-900: #f9fafb;
+//     --color-red-100: #fee2e2;
+//     --color-red-700: #b91c1c;
+//     --color-red-800: #991b1b;
 
-    --color-blue-100: #075985;
-    --color-blue-700: #e0f2fe;
-    --color-green-100: #166534;
-    --color-green-700: #dcfce7;
-    --color-yellow-100: #854d0e;
-    --color-yellow-700: #fef9c3;
-    --color-silver-100: #374151;
-    --color-silver-700: #f3f4f6;
-    --color-indigo-100: #3730a3;
-    --color-indigo-700: #e0e7ff;
+//     --backdrop-color: rgba(0, 0, 0, 0.3);
 
-    --color-red-100: #fee2e2;
-    --color-red-700: #b91c1c;
-    --color-red-800: #991b1b;
+//     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+//     --shadow-md: 0px 0.6rem 2.4rem rgba(0, 0, 0, 0.3);
+//     --shadow-lg: 0 2.4rem 3.2rem rgba(0, 0, 0, 0.4);
 
-    --backdrop-color: rgba(0, 0, 0, 0.3);
+//     --image-grayscale: 10%;
+//     --image-opacity: 90%;
+//   }
 
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0px 0.6rem 2.4rem rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 2.4rem 3.2rem rgba(0, 0, 0, 0.4);
+//   /* Indigo */
+//   --color-brand-50: #e7e8fd;
+//   --color-brand-100: #d0d0fb;
+//   --color-brand-200: #a0a2f8;
+//   --color-brand-300: #7173f4;
+//   --color-brand-400: #4144f1;
+//   --color-brand-500: #1216ed;
+//   --color-brand-600: #0e11be;
+//   --color-brand-700: #0b0d8e;
+//   --color-brand-800: #07095f;
+//   --color-brand-900: #04042f;
+//   --color-brand-950: #020218;
 
-    --image-grayscale: 10%;
-    --image-opacity: 90%;
-  }
+//   --border-radius-tiny: 3px;
+//   --border-radius-sm: 5px;
+//   --border-radius-md: 7px;
+//   --border-radius-lg: 9px;
+//   --border-radius-full: 15px;
 
-  /* Indigo */
-  --color-brand-50: #e7e8fd;
-  --color-brand-100: #d0d0fb;
-  --color-brand-200: #a0a2f8;
-  --color-brand-300: #7173f4;
-  --color-brand-400: #4144f1;
-  --color-brand-500: #1216ed;
-  --color-brand-600: #0e11be;
-  --color-brand-700: #0b0d8e;
-  --color-brand-800: #07095f;
-  --color-brand-900: #04042f;
-  --color-brand-950: #020218;
+//   /* tmep */
+//   --text-50: #e7e9fd;
+// --text-100: #cfd3fc;
+// --text-200: #a0a7f8;
+// --text-300: #707bf5;
+// --text-400: #404ff2;
+// --text-500: #1123ee;
+// --text-600: #0d1cbf;
+// --text-700: #0a158f;
+// --text-800: #070e5f;
+// --text-900: #030730;
+// --text-950: #020418;
+// --text:#01020e;
 
-  --border-radius-tiny: 3px;
-  --border-radius-sm: 5px;
-  --border-radius-md: 7px;
-  --border-radius-lg: 9px;
-  --border-radius-full: 15px;
+//   --background-50: #e8e8fc;
+// --background-100: #d1d1fa;
+// --background-200: #a3a3f5;
+// --background-300: #7575f0;
+// --background-400: #4747eb;
+// --background-500: #1919e6;
+// --background-600: #1414b8;
+// --background-700: #0f0f8a;
+// --background-800: #0a0a5c;
+// --background-900: #05052e;
+// --background-950: #030317;
+// --background:#f6f6fe;
 
+// --primary-50: #e7e8fd;
+// --primary-100: #d0d0fb;
+// --primary-200: #a0a2f8;
+// --primary-300: #7173f4;
+// --primary-400: #4144f1;
+// --primary-500: #1216ed;
+// --primary-600: #0e11be;
+// --primary-700: #0b0d8e;
+// --primary-800: #07095f;
+// --primary-900: #04042f;
+// --primary-950: #020218;
+// --primary:#5457f2;
 
-  /* tmep */
-  --text-50: #e7e9fd;
---text-100: #cfd3fc;
---text-200: #a0a7f8;
---text-300: #707bf5;
---text-400: #404ff2;
---text-500: #1123ee;
---text-600: #0d1cbf;
---text-700: #0a158f;
---text-800: #070e5f;
---text-900: #030730;
---text-950: #020418;
---text:#01020e;
+// --secondary-50: #fbf3ea;
+// --secondary-100: #f6e8d5;
+// --secondary-200: #eed0aa;
+// --secondary-300: #e5b980;
+// --secondary-400: #dca256;
+// --secondary-500: #d48b2b;
+// --secondary-600: #a96f23;
+// --secondary-700: #7f531a;
+// --secondary-800: #553711;
+// --secondary-900: #2a1c09;
+// --secondary-950: #150e04;
+// --secondary:#e8c08d;
 
+// --accent-50: #fdf3e7;
+// --accent-100: #fce8cf;
+// --accent-200: #f9d09f;
+// --accent-300: #f6b96f;
+// --accent-400: #f3a23f;
+// --accent-500: #f08b0f;
+// --accent-600: #c06f0c;
+// --accent-700: #905309;
+// --accent-800: #603706;
+// --accent-900: #301c03;
+// --accent-950: #180e02;
+//   --accent:#f29d36;
+// }
 
-  --background-50: #e8e8fc;
---background-100: #d1d1fa;
---background-200: #a3a3f5;
---background-300: #7575f0;
---background-400: #4747eb;
---background-500: #1919e6;
---background-600: #1414b8;
---background-700: #0f0f8a;
---background-800: #0a0a5c;
---background-900: #05052e;
---background-950: #030317;
---background:#f6f6fe;
+// *,
+// *::before,
+// *::after {
+//   box-sizing: border-box;
+//   padding: 0;
+//   margin: 0;
 
---primary-50: #e7e8fd;
---primary-100: #d0d0fb;
---primary-200: #a0a2f8;
---primary-300: #7173f4;
---primary-400: #4144f1;
---primary-500: #1216ed;
---primary-600: #0e11be;
---primary-700: #0b0d8e;
---primary-800: #07095f;
---primary-900: #04042f;
---primary-950: #020218;
---primary:#5457f2;
+//   /* Creating animations for dark mode */
+//   transition: background-color 0.3s, border 0.3s;
+// }
 
---secondary-50: #fbf3ea;
---secondary-100: #f6e8d5;
---secondary-200: #eed0aa;
---secondary-300: #e5b980;
---secondary-400: #dca256;
---secondary-500: #d48b2b;
---secondary-600: #a96f23;
---secondary-700: #7f531a;
---secondary-800: #553711;
---secondary-900: #2a1c09;
---secondary-950: #150e04;
---secondary:#e8c08d;
+// html {
+//   font-size: 62.5%;
+// }
 
---accent-50: #fdf3e7;
---accent-100: #fce8cf;
---accent-200: #f9d09f;
---accent-300: #f6b96f;
---accent-400: #f3a23f;
---accent-500: #f08b0f;
---accent-600: #c06f0c;
---accent-700: #905309;
---accent-800: #603706;
---accent-900: #301c03;
---accent-950: #180e02;
-  --accent:#f29d36;
-}
+// body {
+//   font-family: "LXGW WenKai Mono TC", 'Rubik', sans-serif;
+//   color: var(--color-grey-700);
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+//   transition: color 0.3s, background-color 0.3s;
+//   min-height: 100vh;
+//   line-height: 1.5;
+//   font-size: 1.6rem;
+// }
 
-  /* Creating animations for dark mode */
-  transition: background-color 0.3s, border 0.3s;
-}
+// input,
+// button,
+// textarea,
+// select {
+//   font: inherit;
+//   color: inherit;
+// }
 
-html {
-  font-size: 62.5%;
-}
+// button {
+//   cursor: pointer;
+// }
 
-body {
-  font-family: "LXGW WenKai Mono TC", 'Rubik', sans-serif;
-  color: var(--color-grey-700);
+// *:disabled {
+//   cursor: not-allowed;
+// }
 
-  transition: color 0.3s, background-color 0.3s;
-  min-height: 100vh;
-  line-height: 1.5;
-  font-size: 1.6rem;
-}
+// select:disabled,
+// input:disabled {
+//   background-color: var(--color-grey-200);
+//   color: var(--color-grey-500);
+// }
 
-input,
-button,
-textarea,
-select {
-  font: inherit;
-  color: inherit;
-}
+// input:focus,
+// button:focus,
+// textarea:focus,
+// select:focus {
+//   outline: 2px solid var(--color-brand-600);
+//   outline-offset: -1px;
+// }
 
-button {
-  cursor: pointer;
-}
+// /* Parent selector, finally 😃 */
+// button:has(svg) {
+//   line-height: 0;
+// }
 
-*:disabled {
-  cursor: not-allowed;
-}
+// a {
+//   color: inherit;
+//   text-decoration: none;
+// }
 
-select:disabled,
-input:disabled {
-  background-color: var(--color-grey-200);
-  color: var(--color-grey-500);
-}
+// ul {
+//   list-style: none;
+// }
 
-input:focus,
-button:focus,
-textarea:focus,
-select:focus {
-  outline: 2px solid var(--color-brand-600);
-  outline-offset: -1px;
-}
+// p,
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6 {
+//   overflow-wrap: break-word;
+//   hyphens: auto;
+// }
 
-/* Parent selector, finally 😃 */
-button:has(svg) {
-  line-height: 0;
-}
+// img {
+//   max-width: 100%;
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+//   /* For dark mode */
+//   filter: grayscale(var(--image-grayscale)) opacity(var(--image-opacity));
+// }
+// `;
 
-ul {
-  list-style: none;
-}
-
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  overflow-wrap: break-word;
-  hyphens: auto;
-}
-
-img {
-  max-width: 100%;
-
-  /* For dark mode */
-  filter: grayscale(var(--image-grayscale)) opacity(var(--image-opacity));
-}
-`;
-
-export default GlobalStyles;
+// export default GlobalStyles;

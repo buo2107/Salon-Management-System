@@ -1,10 +1,10 @@
-import Button from "../ui/Button";
+// import Button from "../ui/Button";
 
 function Dashboard() {
   return (
     <div>
       Dashboard
-      <Button>ddd</Button>
+      {/* <Button>ddd</Button> */}
     </div>
   );
 }

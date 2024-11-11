@@ -1,12 +1,5 @@
-import Heading from "../ui/Heading";
-import LayoutRow from "../ui/LayoutRow";
-
 function Products() {
-  return (
-    <LayoutRow>
-      <Heading as="h1">Proudcts</Heading>
-    </LayoutRow>
-  );
+  return <div>products</div>;
 }
 
 export default Products;

@@ -1,15 +1,15 @@
-import GuestTable from "../features/guests/GuestTable";
-import Heading from "../ui/Heading";
-import LayoutRow from "../ui/LayoutRow";
+// import GuestTable from "../features/guests/GuestTable";
 
 function Guests() {
   return (
     <>
-      <LayoutRow>
+      <div>dddd</div>
+      {/* <LayoutRow>
         <Heading as="h1">客戶資料</Heading>
-      </LayoutRow>
+      </LayoutRow> */}
 
-      <GuestTable />
+      <div>table</div>
+      {/* <GuestTable /> */}
     </>
   );
 }
