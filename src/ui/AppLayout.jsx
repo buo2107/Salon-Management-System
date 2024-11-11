@@ -2,6 +2,8 @@
 // import Siderbar from "./Siderbar";
 // import Header from "./Header";
 
+import Header from "./Header";
+
 // const StyledAppLayout = styled.div`
 //   display: grid;
 //   grid-template-columns: 24rem 1fr;
@@ -25,10 +27,11 @@
 
 function AppLayout() {
   return (
-    <div className="grid h-screen grid-cols-[24rem_1fr] grid-rows-[auto_1fr]">
-      <div className="bg-teal-900 text-center uppercase">header</div>
-      <div>sidebar</div>
-      <div>main</div>
+    <div className="grid h-screen grid-cols-[auto_1fr] grid-rows-[auto_1fr]">
+      {/* <div className="bg-teal-900">header</div> */}
+      <Header />
+      <div className="bg-indigo-700">sidebar</div>
+      <div className="bg-yellow-900">main</div>
     </div>
     // <StyledAppLayout>
     //   <Header />

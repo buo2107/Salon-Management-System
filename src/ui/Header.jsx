@@ -13,14 +13,17 @@
 //   justify-content: flex-end;
 // `;
 
-// function Header() {
-//   return (
-//     <StyledHeader>
-//       HEADER
-//       {/* <UserAvatar />
-//       <HeaderMenu /> */}
-//     </StyledHeader>
-//   );
-// }
+function Header() {
+  return (
+    <header className="border-b-2 border-solid border-slate-800 px-5 py-16">
+      header
+    </header>
+    // <StyledHeader>
+    //   HEADER
+    //   {/* <UserAvatar />
+    //   <HeaderMenu /> */}
+    // </StyledHeader>
+  );
+}
 
-// export default Header;
+export default Header;
