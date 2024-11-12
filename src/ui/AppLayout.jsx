@@ -1,38 +1,49 @@
-// import { Outlet } from "react-router-dom";
-// import Siderbar from "./Siderbar";
-// import Header from "./Header";
-
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
+import { AppSidebar } from "./AppSiderbar";
+import { Separator } from "@radix-ui/react-separator";
 import Header from "./Header";
-
-// const StyledAppLayout = styled.div`
-//   display: grid;
-//   grid-template-columns: 24rem 1fr;
-//   grid-template-rows: auto 1fr;
-//   height: 100vh;
-// `;
-
-// const Main = styled.main`
-//   background-color: var(--color-grey-50);
-//   padding: 4rem 4.8rem 6.4rem;
-//   overflow: scroll;
-// `;
-
-// const Container = styled.div`
-//   max-width: 120rem;
-//   margin: 0 auto;
-//   display: flex;
-//   flex-direction: column;
-//   gap: 3.2rem;
-// `;
 
 function AppLayout() {
   return (
-    <div className="grid h-screen grid-cols-[auto_1fr] grid-rows-[auto_1fr]">
-      {/* <div className="bg-teal-900">header</div> */}
-      <Header />
-      <div className="bg-indigo-700">sidebar</div>
-      <div className="bg-yellow-900">main</div>
-    </div>
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+          <div className="flex items-center gap-2 px-4">
+            <SidebarTrigger className="-ml-1" />
+            <Separator orientation="vertical" className="mr-2 h-4" />
+
+            <Header />
+            {/* <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem className="hidden md:block">
+                  <BreadcrumbLink href="#">
+                    Building Your Application
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator className="hidden md:block" />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb> */}
+          </div>
+        </header>
+
+        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+            <div className="bg-muted/50 aspect-video rounded-xl" />
+            <div className="bg-muted/50 aspect-video rounded-xl" />
+            <div className="bg-muted/50 aspect-video rounded-xl" />
+          </div>
+          <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" />
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
     // <StyledAppLayout>
     //   <Header />
     //   <Siderbar />

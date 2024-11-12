@@ -15,9 +15,7 @@
 
 function Header() {
   return (
-    <header className="border-b-2 border-solid border-slate-800 px-5 py-16">
-      header
-    </header>
+    <header>header</header>
     // <StyledHeader>
     //   HEADER
     //   {/* <UserAvatar />
