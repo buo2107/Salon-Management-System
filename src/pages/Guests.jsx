@@ -1,14 +1,17 @@
 // import GuestTable from "../features/guests/GuestTable";
 
+import GuestTable from "@/features/guests/GuestTable";
+
 function Guests() {
   return (
     <>
-      <div>dddd</div>
-      {/* <LayoutRow>
-        <Heading as="h1">客戶資料</Heading>
-      </LayoutRow> */}
+      <div className="flex flex-col gap-6 pt-5">
+        <h1 className="text-3xl font-semibold tracking-widest">客戶資料</h1>
+      </div>
 
-      <div>table</div>
+      <div className="px-10 py-6">
+        <GuestTable />
+      </div>
       {/* <GuestTable /> */}
     </>
   );

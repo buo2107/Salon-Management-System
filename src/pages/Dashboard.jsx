@@ -1,5 +1,3 @@
-// import Button from "../ui/Button";
-
 function Dashboard() {
   return (
     <div>

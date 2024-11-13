@@ -15,8 +15,7 @@ import PageNotFound from "./pages/PageNotFound";
 function App() {
   return (
     <>
-      <AppLayout />
-      {/* <BrowserRouter>
+      <BrowserRouter>
         <Routes>
           <Route element={<AppLayout />}>
             <Route index element={<Navigate replace to="dashboard" />} />
@@ -33,7 +32,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
-      </BrowserRouter> */}
+      </BrowserRouter>
     </>
   );
 }
