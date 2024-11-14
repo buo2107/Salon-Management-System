@@ -53,9 +53,9 @@ function MainNav() {
         <SidebarMenu key={item.title}>
           <SidebarMenuItem>
             <Link to={item.link}>
-              <SidebarMenuButton className="group/item space-x-1 px-5 py-8 text-base text-gray-500">
-                <item.icon className="group-hover/item:text-indigo-600" />
-                <span className="tracking-widest group-hover/item:text-indigo-950">
+              <SidebarMenuButton className="group/item space-x-1 px-5 py-8 text-base font-semibold text-primary/50">
+                <item.icon className="group-hover/item:text-primary" />
+                <span className="tracking-widest group-hover/item:text-primary/70">
                   {item.title}
                 </span>
               </SidebarMenuButton>

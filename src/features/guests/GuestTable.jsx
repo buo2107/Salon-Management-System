@@ -6,31 +6,48 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+} from "@radix-ui/react-dropdown-menu";
+import { GripHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { formatPhoneNumber } from "@/utils/helpers";
 
 function GuestTable() {
   return (
-    <Table className="border border-red-500">
-      <TableHeader>
-        <TableRow className="*:font-semibold">
-          <TableHead>姓名</TableHead>
-          <TableHead>性別</TableHead>
-          <TableHead>電話號碼</TableHead>
-          <TableHead>類型</TableHead>
-          <TableHead>最後消費日期</TableHead>
-          <TableHead>1651</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        <TableRow>
-          <TableCell>王曉明</TableCell>
-          <TableCell>男</TableCell>
-          <TableCell>09522422355</TableCell>
-          <TableCell>vip</TableCell>
-          <TableCell>2024/2/3</TableCell>
-          <TableCell>5156</TableCell>
-        </TableRow>
-      </TableBody>
-    </Table>
+    <div className="rounded-md border">
+      <Table>
+        <TableHeader>
+          <TableRow className="*:font-semibold">
+            <TableHead className="text-center">姓名</TableHead>
+            <TableHead>性別</TableHead>
+            <TableHead>類型</TableHead>
+            <TableHead>電話號碼</TableHead>
+            <TableHead>最後消費日期</TableHead>
+            <TableHead></TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell className="text-center">王曉明</TableCell>
+            <TableCell>男</TableCell>
+            <TableCell>vip</TableCell>
+            <TableCell>{formatPhoneNumber("0956438951")}</TableCell>
+            <TableCell>2024/2/3</TableCell>
+            <TableCell>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button size="icon" variant="ghost">
+                    <GripHorizontal />
+                  </Button>
+                </DropdownMenuTrigger>
+              </DropdownMenu>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </div>
   );
 }
 

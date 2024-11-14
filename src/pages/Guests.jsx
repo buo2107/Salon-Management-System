@@ -1,18 +1,23 @@
-// import GuestTable from "../features/guests/GuestTable";
-
+import { Button } from "@/components/ui/button";
 import GuestTable from "@/features/guests/GuestTable";
+import { UserPlus } from "lucide-react";
 
 function Guests() {
   return (
     <>
       <div className="flex flex-col gap-6 pt-5">
-        <h1 className="text-3xl font-semibold tracking-widest">客戶資料</h1>
+        <h1 className="text-3xl font-semibold tracking-widest text-primary">
+          客戶資料
+        </h1>
       </div>
 
-      <div className="px-10 py-6">
+      <div className="flex flex-col gap-6">
         <GuestTable />
+
+        <Button size="icon">
+          <UserPlus />
+        </Button>
       </div>
-      {/* <GuestTable /> */}
     </>
   );
 }
