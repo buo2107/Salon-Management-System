@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import AccountingLedger from "./pages/AccountingLedger";
 import Ledger from "./pages/Ledger";
 import PageNotFound from "./pages/PageNotFound";
+import GuestDetail from "./features/guests/GuestDetail";
 
 function App() {
   return (
@@ -24,7 +25,8 @@ function App() {
             <Route path="products" element={<Products />} />
             <Route path="products/:productId" element={<Product />} />
             <Route path="guests" element={<Guests />} />
-            <Route path="users" element={<Users />} />
+            {/* <Route path="users" element={<Users />} /> */}
+            <Route path="user" element={<GuestDetail />} />
             <Route path="accountingLedger" element={<AccountingLedger />} />
             <Route path="accountingLedger/:ledgerId" element={<Ledger />} />
             <Route path="settings" element={<Settings />} />

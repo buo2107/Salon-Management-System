@@ -6,21 +6,21 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import MainNav from "./MainNav";
-import NavSettings from "./NavSettings";
-import Logo from "./Logo";
 import NavUser from "./NavUser";
+import NavTeam from "./NavTeam";
 
 export function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
-        <NavUser />
+        <NavTeam />
       </SidebarHeader>
       <SidebarContent>
         <MainNav />
       </SidebarContent>
       <SidebarFooter>
-        <NavSettings />
+        {/* <NavSettings /> */}
+        <NavUser />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
