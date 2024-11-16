@@ -10,10 +10,7 @@ function AppLayout() {
       <SidebarInset>
         <Header />
 
-        <div
-          role="main"
-          className="overflow-y-scroll bg-background px-16 pb-20 pt-5"
-        >
+        <div role="main" className="bg-background px-16 pb-20 pt-5">
           <div className="container mx-auto flex max-w-7xl flex-1 flex-col gap-12">
             <Outlet />
             {/* <div className="grid auto-rows-min gap-4 md:grid-cols-3">

@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -7,30 +6,33 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import Avatar from "@/ui/Avatar";
 import { formatPhoneNumber } from "@/utils/helpers";
-import { BellRing, Check, PhoneCall } from "lucide-react";
+import { PhoneCall } from "lucide-react";
+import GuestPieChart from "./GuestPieChart";
+import GuestBarChart from "./GuestBarChart";
 
 function GuestDetail() {
-  const notifications = [
+  const data = [
     {
-      title: "Your call has been confirmed.",
-      description: "1 hour ago",
+      title: "來訪次數",
+      value: "8",
     },
     {
-      title: "You have a new message!",
-      description: "1 hour ago",
+      title: "常用服務",
+      value: "剪髮",
     },
     {
-      title: "Your subscription is expiring soon!",
-      description: "2 hours ago",
+      title: "最近來訪",
+      value: "2024/11/19",
     },
   ];
 
   return (
-    <div className="flex flex-col gap-8 bg-slate-400 p-5">
-      <Card className="flex flex-row items-center justify-evenly py-6">
-        <CardHeader className="flex flex-row items-center gap-5">
+    <div className="flex flex-col gap-8 p-5">
+      <Card className="flex flex-row items-center justify-evenly border-2 border-primary py-3">
+        <CardHeader className="flex flex-col items-center gap-3">
           <div>
             <Avatar
               src="default-user.jpg"
@@ -40,7 +42,7 @@ function GuestDetail() {
               w="auto"
             />
           </div>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col items-center gap-2">
             <CardTitle>王曉明</CardTitle>
             <CardDescription className="flex items-center gap-3">
               <PhoneCall className="size-4" />
@@ -51,22 +53,20 @@ function GuestDetail() {
           </div>
         </CardHeader>
 
-        <CardContent>
-          <div className="flex gap-6">
-            {notifications.map((notification, index) => (
+        <CardContent className="p-3">
+          <div className="flex flex-row gap-16">
+            {data.map((item) => (
               <div
-                key={index}
-                className="grid grid-cols-[25px_1fr] items-start border-2 border-primary"
+                key={item.title}
+                className="flex flex-col items-center rounded-md border-2 border-primary p-8"
               >
-                <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
-                <div className="space-y-1">
-                  <p className="text-sm font-medium leading-none">
-                    {notification.title}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {notification.description}
-                  </p>
-                </div>
+                <h4 className="text-lg font-semibold text-primary">
+                  {item.title}
+                </h4>
+                <Separator className="my-4 bg-primary" />
+                <p className="text-3xl font-semibold text-primary/70">
+                  {item.value}
+                </p>
               </div>
             ))}
           </div>
@@ -74,7 +74,14 @@ function GuestDetail() {
       </Card>
 
       {/* Chart */}
-      <div className="h-20 bg-slate-50">CHART</div>
+      <div className="flex flex-row items-stretch justify-between gap-10">
+        <div className="grow rounded-md border-2 border-primary">
+          <GuestPieChart />
+        </div>
+        <div className="rounded-md border-2 border-primary">
+          <GuestBarChart />
+        </div>
+      </div>
     </div>
   );
 }
