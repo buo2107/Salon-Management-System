@@ -11,7 +11,7 @@ function AppLayout() {
         <Header />
 
         <div role="main" className="bg-background px-16 pb-20 pt-5">
-          <div className="container mx-auto flex max-w-7xl flex-1 flex-col gap-12">
+          <div className="container mx-auto flex max-w-7xl flex-1 flex-col">
             <Outlet />
             {/* <div className="grid auto-rows-min gap-4 md:grid-cols-3">
             <div className="bg-muted/50 aspect-video rounded-xl" />
