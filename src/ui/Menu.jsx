@@ -6,6 +6,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useSidebar } from "@/components/ui/sidebar";
 
 function Menu({ children }) {
   return <DropdownMenu>{children}</DropdownMenu>;
@@ -16,8 +17,14 @@ function Trigger({ children }) {
 }
 
 function Content({ children }) {
+  const { isMobile } = useSidebar();
   return (
-    <DropdownMenuContent>
+    <DropdownMenuContent
+      className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+      side={isMobile ? "bottom" : "right"}
+      align="end"
+      sideOffset={4}
+    >
       <DropdownMenuLabel>My Account</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuItem>Profile</DropdownMenuItem>
