@@ -6,13 +6,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
 import { GripHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatPhoneNumber } from "@/utils/helpers";
+import Menu from "@/ui/Menu";
 
 function GuestTable() {
   return (
@@ -36,13 +33,14 @@ function GuestTable() {
             <TableCell>{formatPhoneNumber("0956438951")}</TableCell>
             <TableCell>2024/2/3</TableCell>
             <TableCell>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
+              <Menu>
+                <Menu.Trigger>
                   <Button size="icon" variant="ghost">
                     <GripHorizontal />
                   </Button>
-                </DropdownMenuTrigger>
-              </DropdownMenu>
+                </Menu.Trigger>
+                <Menu.Content />
+              </Menu>
             </TableCell>
           </TableRow>
 
@@ -53,13 +51,14 @@ function GuestTable() {
             <TableCell>{formatPhoneNumber("0956438951")}</TableCell>
             <TableCell>2024/2/3</TableCell>
             <TableCell>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
+              <Menu>
+                <Menu.Trigger>
                   <Button size="icon" variant="ghost">
                     <GripHorizontal />
                   </Button>
-                </DropdownMenuTrigger>
-              </DropdownMenu>
+                </Menu.Trigger>
+                <Menu.Content />
+              </Menu>
             </TableCell>
           </TableRow>
         </TableBody>
