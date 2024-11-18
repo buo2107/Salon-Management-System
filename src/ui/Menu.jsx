@@ -20,17 +20,12 @@ function Content({ children }) {
   const { isMobile } = useSidebar();
   return (
     <DropdownMenuContent
-      className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+      className="flex flex-col items-stretch rounded-lg"
       side={isMobile ? "bottom" : "right"}
-      align="end"
+      align="start"
       sideOffset={4}
     >
-      <DropdownMenuLabel>My Account</DropdownMenuLabel>
-      <DropdownMenuSeparator />
-      <DropdownMenuItem>Profile</DropdownMenuItem>
-      <DropdownMenuItem>Billing</DropdownMenuItem>
-      <DropdownMenuItem>Team</DropdownMenuItem>
-      <DropdownMenuItem>Subscription</DropdownMenuItem>
+      {children}
     </DropdownMenuContent>
   );
 }

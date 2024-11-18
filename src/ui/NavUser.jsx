@@ -7,12 +7,12 @@ import { Link } from "react-router-dom";
 import Avatar from "../ui/Avatar";
 import Menu from "./Menu";
 import { ChevronsUpDown } from "lucide-react";
+import UserMenuList from "@/features/authentication/UserMenuList";
 
 function NavUser() {
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        {/* <Link to="/user"> */}
         <Menu>
           <Menu.Trigger>
             <SidebarMenuButton
@@ -27,9 +27,10 @@ function NavUser() {
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
           </Menu.Trigger>
-          <Menu.Content />
+          <Menu.Content>
+            <UserMenuList />
+          </Menu.Content>
         </Menu>
-        {/* </Link> */}
       </SidebarMenuItem>
     </SidebarMenu>
   );

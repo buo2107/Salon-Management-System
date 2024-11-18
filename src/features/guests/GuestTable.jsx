@@ -6,12 +6,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { GripHorizontal } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { formatPhoneNumber } from "@/utils/helpers";
-import Menu from "@/ui/Menu";
+import { useEffect, useState } from "react";
+import GuestTableMenu from "./GuestTableMenu";
 
 function GuestTable() {
+  // GET FAKE USER DATA
+  // const [fake_data, setData] = useState([]);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const res = await fetch("https://dummyjson.com/users");
+  //     const userdata = await res.json();
+  //     setData(userdata.users);
+  //   }
+  //   fetchData();
+  // }, []);
+  // console.log(fake_data);
+
   return (
     <div className="rounded-md border-2 border-primary">
       <Table>
@@ -33,32 +44,7 @@ function GuestTable() {
             <TableCell>{formatPhoneNumber("0956438951")}</TableCell>
             <TableCell>2024/2/3</TableCell>
             <TableCell>
-              <Menu>
-                <Menu.Trigger>
-                  <Button size="icon" variant="ghost">
-                    <GripHorizontal />
-                  </Button>
-                </Menu.Trigger>
-                <Menu.Content />
-              </Menu>
-            </TableCell>
-          </TableRow>
-
-          <TableRow>
-            <TableCell className="text-center">王曉明</TableCell>
-            <TableCell>男</TableCell>
-            <TableCell>vip</TableCell>
-            <TableCell>{formatPhoneNumber("0956438951")}</TableCell>
-            <TableCell>2024/2/3</TableCell>
-            <TableCell>
-              <Menu>
-                <Menu.Trigger>
-                  <Button size="icon" variant="ghost">
-                    <GripHorizontal />
-                  </Button>
-                </Menu.Trigger>
-                <Menu.Content />
-              </Menu>
+              <GuestTableMenu />
             </TableCell>
           </TableRow>
         </TableBody>
