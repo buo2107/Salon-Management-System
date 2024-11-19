@@ -3,8 +3,12 @@ import { Button } from "@/components/ui/button";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import Menu from "@/ui/Menu";
 import Modal from "@/ui/Modal";
+import { useNavigate } from "react-router-dom";
+import CreateGuestForm from "./CreateGuestForm";
 
 function GuestTableMenu() {
+  const navigate = useNavigate();
+
   return (
     <Modal>
       <Menu>
@@ -15,7 +19,11 @@ function GuestTableMenu() {
         </Menu.Trigger>
         <Menu.Content>
           <DropdownMenuItem>
-            <Button variant="ghost" className="w-full justify-start">
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+              onClick={() => navigate("/user")}
+            >
               <Eye />
               See detail
             </Button>
@@ -36,7 +44,9 @@ function GuestTableMenu() {
           </DropdownMenuItem>
         </Menu.Content>
       </Menu>
-      <Modal.Window />
+      <Modal.Window>
+        <form></form>
+      </Modal.Window>
     </Modal>
   );
 }

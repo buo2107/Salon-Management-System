@@ -15,16 +15,14 @@ function Trigger({ children }) {
   return <DialogTrigger asChild>{children}</DialogTrigger>;
 }
 
-function Window({ children }) {
+function Window({ children, title = "", description = "" }) {
   return (
     <DialogContent>
-      <DialogHeader>
-        <DialogTitle>Are you absolutely sure?</DialogTitle>
-        <DialogDescription>
-          This action cannot be undone. This will permanently delete your
-          account and remove your data from our servers.
-        </DialogDescription>
+      <DialogHeader className="hidden">
+        <DialogTitle>{title}</DialogTitle>
+        <DialogDescription>{description}</DialogDescription>
       </DialogHeader>
+      {children}
     </DialogContent>
   );
 }
