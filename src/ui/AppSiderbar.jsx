@@ -19,7 +19,6 @@ export function AppSidebar() {
         <MainNav />
       </SidebarContent>
       <SidebarFooter>
-        {/* <NavSettings /> */}
         <NavUser />
       </SidebarFooter>
       <SidebarRail />

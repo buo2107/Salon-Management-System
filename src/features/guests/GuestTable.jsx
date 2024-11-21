@@ -24,10 +24,10 @@ function GuestTable() {
   // console.log(fake_data);
 
   return (
-    <div className="rounded-md border-2 border-primary">
+    <div className="rounded-md border-2">
       <Table>
         <TableHeader>
-          <TableRow className="border-b-2 border-primary/60 text-base *:font-semibold">
+          <TableRow className="text-base *:font-semibold">
             <TableHead className="text-center">姓名</TableHead>
             <TableHead>性別</TableHead>
             <TableHead>類型</TableHead>

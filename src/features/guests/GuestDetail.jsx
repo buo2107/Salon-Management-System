@@ -44,7 +44,7 @@ function GuestDetail() {
         </Button>
       </div>
       <div className="flex flex-col gap-8 p-5">
-        <Card className="flex flex-row items-center justify-evenly border-2 border-primary py-3">
+        <Card className="flex flex-row items-center justify-evenly border-2 py-3">
           <CardHeader className="flex flex-col items-center gap-3">
             <div>
               <Avatar
@@ -71,15 +71,11 @@ function GuestDetail() {
               {data.map((item) => (
                 <div
                   key={item.title}
-                  className="flex flex-col items-center rounded-md border-2 border-primary p-8"
+                  className="flex flex-col items-center rounded-md border-2 p-8 *:font-semibold"
                 >
-                  <h4 className="text-lg font-semibold text-primary">
-                    {item.title}
-                  </h4>
-                  <Separator className="my-4 bg-primary" />
-                  <p className="text-3xl font-semibold text-primary/70">
-                    {item.value}
-                  </p>
+                  <h4 className="text-lg">{item.title}</h4>
+                  <Separator className="my-4" />
+                  <p className="text-3xl">{item.value}</p>
                 </div>
               ))}
             </div>
@@ -88,10 +84,10 @@ function GuestDetail() {
 
         {/* Chart */}
         <div className="flex flex-row items-stretch justify-between gap-10">
-          <div className="grow rounded-md border-2 border-primary">
+          <div className="grow rounded-md">
             <GuestPieChart />
           </div>
-          <div className="rounded-md border-2 border-primary">
+          <div className="rounded-md">
             <GuestBarChart />
           </div>
         </div>

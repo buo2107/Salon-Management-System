@@ -39,11 +39,6 @@ const navList = [
     icon: BadgeDollarSign,
     link: "/accountingLedger",
   },
-  //   {
-  //     title: "設定",
-  //     icon: SlidersHorizontal,
-  //     link: "/settings",
-  //   },
 ];
 
 function MainNav() {
@@ -53,9 +48,9 @@ function MainNav() {
         <SidebarMenu key={item.title}>
           <SidebarMenuItem>
             <Link to={item.link}>
-              <SidebarMenuButton className="group/item space-x-1 px-5 py-8 text-base font-semibold text-primary/50">
+              <SidebarMenuButton className="group/item space-x-1 px-5 py-8 text-base">
                 <item.icon className="group-hover/item:text-primary" />
-                <span className="tracking-widest group-hover/item:text-primary/70">
+                <span className="tracking-widest group-hover/item:font-semibold group-hover/item:text-primary/70">
                   {item.title}
                 </span>
               </SidebarMenuButton>
