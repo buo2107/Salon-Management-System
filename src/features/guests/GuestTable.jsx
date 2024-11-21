@@ -9,6 +9,7 @@ import {
 import { formatPhoneNumber } from "@/utils/helpers";
 import { useEffect, useState } from "react";
 import GuestTableMenu from "./GuestTableMenu";
+import { Badge } from "@/components/ui/badge";
 
 function GuestTable() {
   // GET FAKE USER DATA
@@ -40,7 +41,9 @@ function GuestTable() {
           <TableRow>
             <TableCell className="text-center">王曉明</TableCell>
             <TableCell>男</TableCell>
-            <TableCell>vip</TableCell>
+            <TableCell>
+              <Badge>VIP</Badge>
+            </TableCell>
             <TableCell>{formatPhoneNumber("0956438951")}</TableCell>
             <TableCell>2024/2/3</TableCell>
             <TableCell>

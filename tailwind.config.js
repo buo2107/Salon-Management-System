@@ -65,6 +65,9 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
       },
+      aspectRatio: {
+        "3/2": "3 / 2",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

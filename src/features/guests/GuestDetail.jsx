@@ -83,13 +83,14 @@ function GuestDetail() {
         </Card>
 
         {/* Chart */}
-        <div className="flex flex-row items-stretch justify-between gap-10">
-          <div className="grow rounded-md">
+        <div className="flex flex-row">
+          {/* <div className="grow rounded-md">
             <GuestPieChart />
-          </div>
-          <div className="rounded-md">
+          </div> */}
+          <div className="flex-1">
             <GuestBarChart />
           </div>
+          <div className="w-1/2">detailed shopping record for specify day</div>
         </div>
       </div>
     </>
