@@ -1,6 +1,7 @@
 import { UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Modal from "@/ui/Modal";
+import CreateGuestForm from "./CreateGuestForm";
 
 function AddGuest() {
   return (
@@ -10,7 +11,9 @@ function AddGuest() {
           <UserPlus />
         </Button>
       </Modal.Trigger>
-      <Modal.Window />
+      <Modal.Window>
+        <CreateGuestForm />
+      </Modal.Window>
     </Modal>
   );
 }
