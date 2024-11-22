@@ -2,27 +2,19 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formatPhoneNumber } from "@/utils/helpers";
-import { useEffect, useState } from "react";
-import GuestTableMenu from "./GuestTableMenu";
 import { Badge } from "@/components/ui/badge";
+import { formatPhoneNumber } from "@/utils/helpers";
+import GuestTableMenu from "./GuestTableMenu";
+import { guests } from "@/data/data-guests";
+import Pagination from "@/ui/Pagination";
 
 function GuestTable() {
-  // GET FAKE USER DATA
-  // const [fake_data, setData] = useState([]);
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const res = await fetch("https://dummyjson.com/users");
-  //     const userdata = await res.json();
-  //     setData(userdata.users);
-  //   }
-  //   fetchData();
-  // }, []);
-  // console.log(fake_data);
+  const data = guests;
 
   return (
     <div className="rounded-md border-2">
@@ -38,18 +30,18 @@ function GuestTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell className="text-center">王曉明</TableCell>
-            <TableCell>男</TableCell>
-            <TableCell>
-              <Badge>VIP</Badge>
-            </TableCell>
-            <TableCell>{formatPhoneNumber("0956438951")}</TableCell>
-            <TableCell>2024/2/3</TableCell>
-            <TableCell>
-              <GuestTableMenu />
-            </TableCell>
-          </TableRow>
+          {data.map((guest) => (
+            <TableRow key={guest.name}>
+              <TableCell className="text-center">{guest.name}</TableCell>
+              <TableCell>{guest.gender}</TableCell>
+              <TableCell>{guest.vip ? <Badge>VIP</Badge> : ""}</TableCell>
+              <TableCell>{formatPhoneNumber(guest.phone_number)}</TableCell>
+              <TableCell>{guest.last_consumption_date}</TableCell>
+              <TableCell>
+                <GuestTableMenu />
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>

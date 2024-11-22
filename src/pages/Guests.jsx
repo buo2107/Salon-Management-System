@@ -15,7 +15,7 @@ function Guests() {
         <GuestTable />
 
         <div className="self-end">
-          <Pagination />
+          <Pagination count={100} />
         </div>
       </div>
     </>

@@ -44,7 +44,7 @@ function GuestTableMenu() {
           </Menu.Content>
         </Menu>
         <Modal.Window>
-          <form></form>
+          <CreateGuestForm />
         </Modal.Window>
         <DeleteAlert.Window />
       </DeleteAlert>
