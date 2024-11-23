@@ -6,8 +6,10 @@ import Modal from "@/ui/Modal";
 import { useNavigate } from "react-router-dom";
 import CreateGuestForm from "./CreateGuestForm";
 import DeleteAlert from "@/ui/DeleteAlert";
+import { useDeleteGuest } from "./useDeleteGuest";
 
-function GuestTableMenu() {
+function GuestTableMenu({ data }) {
+  const { deleteGuest, isDeleting } = useDeleteGuest();
   const navigate = useNavigate();
 
   return (
@@ -46,7 +48,7 @@ function GuestTableMenu() {
         <Modal.Window>
           <CreateGuestForm />
         </Modal.Window>
-        <DeleteAlert.Window />
+        <DeleteAlert.Window onConfirm={() => deleteGuest(data.id)} />
       </DeleteAlert>
     </Modal>
   );

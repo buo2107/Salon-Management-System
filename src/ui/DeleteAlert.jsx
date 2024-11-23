@@ -11,6 +11,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { deleteGuest } from "@/services/apiGuest";
 
 function DeleteAlert({ children }) {
   return <AlertDialog>{children}</AlertDialog>;
@@ -27,7 +28,7 @@ function Trigger() {
   );
 }
 
-function Window() {
+function Window({ onConfirm }) {
   return (
     <AlertDialogContent>
       <AlertDialogHeader>
@@ -38,7 +39,7 @@ function Window() {
       </AlertDialogHeader>
       <AlertDialogFooter>
         <AlertDialogCancel>取消</AlertDialogCancel>
-        <AlertDialogAction>確定刪除</AlertDialogAction>
+        <AlertDialogAction onClick={onConfirm}>確定刪除</AlertDialogAction>
       </AlertDialogFooter>
     </AlertDialogContent>
   );

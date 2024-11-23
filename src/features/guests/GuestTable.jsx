@@ -40,7 +40,7 @@ function GuestTable() {
               <TableCell>{formatPhoneNumber(guest.phone_number)}</TableCell>
               <TableCell>{guest.description}</TableCell>
               <TableCell>
-                <GuestTableMenu />
+                <GuestTableMenu data={guest} />
               </TableCell>
             </TableRow>
           ))}
