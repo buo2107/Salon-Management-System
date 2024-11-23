@@ -10,11 +10,13 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { formatPhoneNumber } from "@/utils/helpers";
 import GuestTableMenu from "./GuestTableMenu";
-import { guests } from "@/data/data-guests";
 import Pagination from "@/ui/Pagination";
+import { useGuests } from "./useGuests";
+import Spinner from "@/ui/Spinner";
 
 function GuestTable() {
-  const data = guests;
+  const { isLoading, data: guests } = useGuests();
+  if (isLoading) return <Spinner />;
 
   return (
     <div className="rounded-md border-2">
@@ -25,18 +27,18 @@ function GuestTable() {
             <TableHead>性別</TableHead>
             <TableHead>類型</TableHead>
             <TableHead>電話號碼</TableHead>
-            <TableHead>最後消費日期</TableHead>
+            <TableHead>備註</TableHead>
             <TableHead></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((guest) => (
-            <TableRow key={guest.name}>
+          {guests.map((guest) => (
+            <TableRow key={guest.id}>
               <TableCell className="text-center">{guest.name}</TableCell>
               <TableCell>{guest.gender}</TableCell>
               <TableCell>{guest.vip ? <Badge>VIP</Badge> : ""}</TableCell>
               <TableCell>{formatPhoneNumber(guest.phone_number)}</TableCell>
-              <TableCell>{guest.last_consumption_date}</TableCell>
+              <TableCell>{guest.description}</TableCell>
               <TableCell>
                 <GuestTableMenu />
               </TableCell>

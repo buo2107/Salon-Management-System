@@ -17,8 +17,8 @@ import { Button } from "@/components/ui/button";
 function GuestDetail() {
   const data = [
     {
-      title: "來訪次數",
-      value: "8",
+      title: "備註",
+      value: "常用8號染髮劑",
     },
     {
       title: "常用服務",
@@ -75,7 +75,7 @@ function GuestDetail() {
                 >
                   <h4 className="text-lg">{item.title}</h4>
                   <Separator className="my-4" />
-                  <p className="text-3xl">{item.value}</p>
+                  <p className="text-base">{item.value}</p>
                 </div>
               ))}
             </div>
