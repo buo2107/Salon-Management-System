@@ -8,10 +8,10 @@ export function useDeleteGuest() {
   const { mutate: deleteGuest, isPending: isDeleting } = useMutation({
     mutationFn: deleteGuestApi,
     onSuccess: () => {
-      toast("成功刪除");
+      toast.success("已刪除該筆客戶資料");
       queryClient.invalidateQueries({ queryKey: ["guests"] });
     },
-    onError: (err) => toast(err.message),
+    onError: (err) => toast.error(err.message),
   });
 
   return { deleteGuest, isDeleting };

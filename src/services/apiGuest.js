@@ -11,6 +11,18 @@ export async function getGuests() {
   return data;
 }
 
+export async function createGuest(newGuest) {
+  const { data, error } = await supabase
+    .from("guests")
+    .insert([{ ...newGuest }])
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Guest could not be created");
+  }
+}
+
 export async function deleteGuest(id) {
   const { error } = await supabase.from("guests").delete().eq("id", id);
 

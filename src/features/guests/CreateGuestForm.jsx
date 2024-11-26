@@ -1,91 +1,178 @@
-import { Label } from "@/components/ui/label";
+"use client";
+import * as z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useCreateGuest } from "./useCreateGuest";
 
-function CreateGuestForm() {
+const formSchema = z.object({
+  name: z.string().min(1, {
+    message: "此欄位為必須",
+  }),
+  phone_number: z
+    .string()
+    .min(1, {
+      message: "此欄位為必須",
+    })
+    .regex(/^0(9|2)\d{8}$/, "非標準電話號碼，請確認輸入是否正確"),
+  gender: z.string(),
+  vip: z.boolean().optional(),
+  description: z.string().optional(),
+});
+
+export default function CreateGuestForm({ modalOpenChange }) {
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      phone_number: "",
+      vip: false,
+      description: "",
+      gender: "女",
+    },
+  });
+
+  const { createGuest, isCreating } = useCreateGuest();
+
+  function onSubmit(data) {
+    createGuest(data);
+    form.reset();
+    modalOpenChange(false);
+    // console.log(data);
+  }
+
   return (
-    <form className="overflow-hidden px-10 py-6 *:text-2xl">
-      {/* GUEST NAME */}
-      <div className="space-y-2 pb-5">
-        <Label htmlFor="guest_name">
-          客戶姓名 <span className="text-destructive">*</span>
-        </Label>
-        <Input id="guest_name" placeholder="王小明" type="text" required />
-        {/* <Input
-          id="input-06"
-          className="border-destructive/80 text-destructive focus-visible:border-destructive/80 focus-visible:ring-destructive/20"
-          placeholder="Email"
-          type="email"
-          defaultValue="invalid@email.com"
-        /> */}
-        {/* <p
-          className="mt-2 text-xs text-destructive"
-          role="alert"
-          aria-live="polite"
-        >
-          ERROR MESSAGE
-        </p> */}
-      </div>
-
-      {/* PHONE NUMBER */}
-      <div className="space-y-2 pb-5">
-        <Label htmlFor="input-02">
-          聯絡電話 <span className="text-destructive">*</span>
-        </Label>
-        <Input id="input-02" placeholder="phone number" type="phone" required />
-        {/* <p
-          className="mt-2 text-xs text-destructive"
-          role="alert"
-          aria-live="polite"
-        >
-          ERROR MESSAGE
-        </p> */}
-      </div>
-
-      {/* GENDER */}
-      <div className="space-y-2 pb-5">
-        <RadioGroup defaultValue="female" className="flex gap-5 py-2">
-          <div className="flex items-center gap-1">
-            <RadioGroupItem value="female" id="female" />
-            <Label htmlFor="female">女</Label>
-          </div>
-          <div className="flex items-center gap-2">
-            <RadioGroupItem value="man" id="man" />
-            <Label htmlFor="man">男</Label>
-          </div>
-        </RadioGroup>
-      </div>
-
-      {/* VIP */}
-      <div className="space-y-2 pb-5">
-        <div className="flex items-center gap-2">
-          <Checkbox id="isVIP" />
-          <Label htmlFor="isVIP" className="font-semibold">
-            VIP
-          </Label>
-        </div>
-      </div>
-
-      {/* DESCRIPTION */}
-      <div className="space-y-2 pb-5">
-        <Label htmlFor="description">客戶備註</Label>
-        <Textarea
-          id="description"
-          className="min-h-[none]"
-          placeholder="常用***色染髮劑、油性髮..."
-          rows={2}
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="mx-auto w-full max-w-3xl space-y-8 py-10"
+      >
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                客戶姓名<span className="text-destructive">*</span>
+              </FormLabel>
+              <FormControl>
+                <Input placeholder="哆啦O夢" type="text" {...field} />
+              </FormControl>
+              {form.getFieldState(field.name).error ? (
+                <FormMessage />
+              ) : (
+                <FormDescription>請輸入客戶名稱</FormDescription>
+              )}
+            </FormItem>
+          )}
         />
-      </div>
 
-      <div className="flex items-center justify-end gap-5">
-        <Button variant="outline">取消</Button>
-        <Button type="submit">新增</Button>
-      </div>
-    </form>
+        <FormField
+          control={form.control}
+          name="phone_number"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                連絡電話<span className="text-destructive">*</span>
+              </FormLabel>
+              <FormControl>
+                <Input placeholder="10位碼" type="text" {...field} />
+              </FormControl>
+              {form.getFieldState(field.name).error ? (
+                <FormMessage />
+              ) : (
+                <FormDescription>請輸入手機(09)或市話(02)號碼</FormDescription>
+              )}
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="gender"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                性別<span className="text-destructive">*</span>
+              </FormLabel>
+              <FormControl>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  className="flex flex-row items-center space-x-3"
+                >
+                  <FormItem className="flex items-center space-x-1 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="女" />
+                    </FormControl>
+                    <FormLabel className="font-normal">女</FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-1 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="男" />
+                    </FormControl>
+                    <FormLabel className="font-normal">男</FormLabel>
+                  </FormItem>
+                </RadioGroup>
+              </FormControl>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="vip"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>VIP</FormLabel>
+                <FormDescription>確認此客戶為本店VIP</FormDescription>
+                <FormMessage />
+              </div>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>備註</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="常用***色染髮劑、油性髮..."
+                  className="min-h-[none]"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" disabled={isCreating}>
+          Submit
+        </Button>
+      </form>
+    </Form>
   );
 }
-
-export default CreateGuestForm;

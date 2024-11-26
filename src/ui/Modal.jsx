@@ -1,14 +1,21 @@
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-function Modal({ children }) {
-  return <Dialog>{children}</Dialog>;
+function Modal({ children, open, onOpenChange }) {
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      {children}
+    </Dialog>
+  );
 }
 
 function Trigger({ children }) {
@@ -27,7 +34,18 @@ function Window({ children, title = "", description = "" }) {
   );
 }
 
+// function Footer() {
+//   return (
+//     <DialogFooter>
+//       <DialogClose asChild>
+//         <Button type="submit">Submit</Button>
+//       </DialogClose>
+//     </DialogFooter>
+//   );
+// }
+
 Modal.Trigger = Trigger;
 Modal.Window = Window;
+// Modal.Footer = Footer;
 
 export default Modal;

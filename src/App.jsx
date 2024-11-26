@@ -37,8 +37,8 @@ function App() {
               <Route path="products" element={<Products />} />
               <Route path="products/:productId" element={<Product />} />
               <Route path="guests" element={<Guests />} />
+              <Route path="guests/:guestId" element={<GuestDetail />} />
               {/* <Route path="users" element={<Users />} /> */}
-              <Route path="user" element={<GuestDetail />} />
               <Route path="accountingLedger" element={<AccountingLedger />} />
               <Route path="accountingLedger/:ledgerId" element={<Ledger />} />
               <Route path="settings" element={<Settings />} />

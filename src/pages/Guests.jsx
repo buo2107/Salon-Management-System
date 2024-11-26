@@ -1,4 +1,5 @@
 import AddGuest from "@/features/guests/AddGuest";
+import CreateGuestForm from "@/features/guests/CreateGuestForm";
 import GuestTable from "@/features/guests/GuestTable";
 import Pagination from "@/ui/Pagination";
 
@@ -17,6 +18,9 @@ function Guests() {
         <div className="self-end">
           <Pagination count={100} />
         </div>
+
+        {/* <RadioGroupForm /> */}
+        {/* <CreateGuestForm /> */}
       </div>
     </>
   );
