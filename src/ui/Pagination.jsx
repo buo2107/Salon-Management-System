@@ -1,3 +1,4 @@
+import { useSearchParams } from "react-router-dom";
 import {
   Pagination as CNPagination,
   PaginationContent,
@@ -7,9 +8,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { useSearchParams } from "react-router-dom";
-
-const PAGE_SIZE = 5;
+import { PAGE_SIZE } from "@/utils/constants";
 
 function Pagination({ count }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -25,34 +24,31 @@ function Pagination({ count }) {
     const next = currentPage === pageCount ? currentPage : currentPage + 1;
     searchParams.set("page", next);
     setSearchParams(searchParams);
-    console.log("next");
   }
 
   function prevPage() {
     const prev = currentPage === 1 ? currentPage : currentPage - 1;
     searchParams.set("page", prev);
     setSearchParams(searchParams);
-    console.log("prev");
   }
 
   return (
     <CNPagination>
       <PaginationContent>
-        <PaginationItem>
+        <PaginationItem className={`${currentPage === 1 && "invisible"}`}>
           <PaginationPrevious onClick={prevPage} />
         </PaginationItem>
-        {/* <PaginationItem>
-          <PaginationLink href="#">1</PaginationLink>
-        </PaginationItem>
         <PaginationItem>
-          <PaginationLink href="#" isActive>
-            2
-          </PaginationLink>
+          <PaginationLink>{currentPage}</PaginationLink>
         </PaginationItem>
+        <PaginationItem></PaginationItem>
+        {/*
         <PaginationItem>
           <PaginationEllipsis />
         </PaginationItem> */}
-        <PaginationItem>
+        <PaginationItem
+          className={`${currentPage === pageCount && "invisible"}`}
+        >
           <PaginationNext onClick={nextPage} />
         </PaginationItem>
       </PaginationContent>

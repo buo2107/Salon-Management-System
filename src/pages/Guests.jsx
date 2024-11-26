@@ -14,13 +14,6 @@ function Guests() {
         <AddGuest />
 
         <GuestTable />
-
-        <div className="self-end">
-          <Pagination count={100} />
-        </div>
-
-        {/* <RadioGroupForm /> */}
-        {/* <CreateGuestForm /> */}
       </div>
     </>
   );
