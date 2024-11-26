@@ -1,19 +1,21 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Edit, Eye, GripHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import Menu from "@/ui/Menu";
 import Modal from "@/ui/Modal";
-import { useNavigate } from "react-router-dom";
-import CreateGuestForm from "./CreateGuestForm";
 import DeleteAlert from "@/ui/DeleteAlert";
+import CreateGuestForm from "./CreateGuestForm";
 import { useDeleteGuest } from "./useDeleteGuest";
 
 function GuestTableMenu({ data }) {
-  const { deleteGuest, isDeleting } = useDeleteGuest();
+  const [open, setOpen] = useState(false);
+  const { deleteGuest } = useDeleteGuest();
   const navigate = useNavigate();
 
   return (
-    <Modal>
+    <Modal open={open} onOpenChange={setOpen}>
       <DeleteAlert>
         <Menu>
           <Menu.Trigger>
@@ -26,17 +28,18 @@ function GuestTableMenu({ data }) {
               <Button
                 variant="ghost"
                 className="w-full justify-start"
-                onClick={() => navigate("/user")}
+                onClick={() => navigate(`/guests/${data.id}`)}
               >
                 <Eye />
-                See detail
+                詳細資料
               </Button>
             </DropdownMenuItem>
             <DropdownMenuItem>
+              {/* Update guest data trigger button */}
               <Modal.Trigger>
                 <Button variant="ghost" className="w-full justify-start">
                   <Edit />
-                  Edit
+                  修改內容
                 </Button>
               </Modal.Trigger>
             </DropdownMenuItem>
@@ -45,8 +48,12 @@ function GuestTableMenu({ data }) {
             </DropdownMenuItem>
           </Menu.Content>
         </Menu>
+        {/* Update guest data window form */}
         <Modal.Window>
-          <CreateGuestForm />
+          <CreateGuestForm
+            guestToUpdate={data}
+            onCloseModal={() => setOpen(false)}
+          />
         </Modal.Window>
         <DeleteAlert.Window onConfirm={() => deleteGuest(data.id)} />
       </DeleteAlert>

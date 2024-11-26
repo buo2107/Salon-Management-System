@@ -1,10 +1,7 @@
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -33,16 +30,6 @@ function Window({ children, title = "", description = "" }) {
     </DialogContent>
   );
 }
-
-// function Footer() {
-//   return (
-//     <DialogFooter>
-//       <DialogClose asChild>
-//         <Button type="submit">Submit</Button>
-//       </DialogClose>
-//     </DialogFooter>
-//   );
-// }
 
 Modal.Trigger = Trigger;
 Modal.Window = Window;

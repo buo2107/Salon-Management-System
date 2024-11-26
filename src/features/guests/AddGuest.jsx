@@ -1,8 +1,8 @@
+import { useState } from "react";
 import { UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Modal from "@/ui/Modal";
-import { useState } from "react";
 import CreateGuestForm from "./CreateGuestForm";
+import Modal from "@/ui/Modal";
 
 function AddGuest() {
   const [open, setOpen] = useState(false);
@@ -15,7 +15,7 @@ function AddGuest() {
         </Button>
       </Modal.Trigger>
       <Modal.Window>
-        <CreateGuestForm modalOpenChange={setOpen} />
+        <CreateGuestForm onCloseModal={() => setOpen(false)} />
       </Modal.Window>
     </Modal>
   );

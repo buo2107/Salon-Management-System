@@ -17,6 +17,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useCreateGuest } from "./useCreateGuest";
+import { useUpdateGuest } from "./useUpdateGuest";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -33,24 +34,34 @@ const formSchema = z.object({
   description: z.string().optional(),
 });
 
-export default function CreateGuestForm({ modalOpenChange }) {
+export default function CreateGuestForm({ guestToUpdate = {}, onCloseModal }) {
+  const { createGuest, isCreating } = useCreateGuest();
+  const { updateGuest, isUpdating } = useUpdateGuest();
+
+  // Confirm whether is in UPDATE situation (guestId has existed)
+  const { id: guestId, ...updateValues } = guestToUpdate;
+  const isUpdateSession = Boolean(guestId);
+  // console.log(updateValues);
+
   const form = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      phone_number: "",
-      vip: false,
-      description: "",
-      gender: "女",
-    },
+    defaultValues: isUpdateSession
+      ? updateValues
+      : {
+          name: "",
+          phone_number: "",
+          vip: false,
+          description: "",
+          gender: "女",
+        },
   });
 
-  const { createGuest, isCreating } = useCreateGuest();
-
   function onSubmit(data) {
-    createGuest(data);
+    if (isUpdateSession) updateGuest({ updateData: { ...data }, id: guestId });
+    else createGuest(data);
+
     form.reset();
-    modalOpenChange(false);
+    onCloseModal();
     // console.log(data);
   }
 

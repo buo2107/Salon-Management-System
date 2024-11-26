@@ -11,6 +11,21 @@ export async function getGuests() {
   return data;
 }
 
+export async function getGuest(id) {
+  let { data, error } = await supabase
+    .from("guests")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Guests data could not be loaded");
+  }
+
+  return data;
+}
+
 export async function createGuest(newGuest) {
   const { data, error } = await supabase
     .from("guests")
@@ -20,6 +35,19 @@ export async function createGuest(newGuest) {
   if (error) {
     console.error(error);
     throw new Error("Guest could not be created");
+  }
+}
+
+export async function updateGuest(updateData, id) {
+  const { data, error } = await supabase
+    .from("guests")
+    .update(updateData)
+    .eq("id", id)
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Guest could not be updated");
   }
 }
 

@@ -35,7 +35,9 @@ function GuestTable() {
           {guests.map((guest) => (
             <TableRow key={guest.id}>
               <TableCell className="text-center">{guest.name}</TableCell>
-              <TableCell>{guest.gender}</TableCell>
+              <TableCell>
+                <Badge variant="outline">{guest.gender}</Badge>
+              </TableCell>
               <TableCell>{guest.vip ? <Badge>VIP</Badge> : ""}</TableCell>
               <TableCell>{formatPhoneNumber(guest.phone_number)}</TableCell>
               <TableCell>{guest.description}</TableCell>

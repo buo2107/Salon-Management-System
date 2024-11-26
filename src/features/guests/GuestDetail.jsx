@@ -13,12 +13,22 @@ import { ChevronLeft, PhoneCall } from "lucide-react";
 import GuestPieChart from "./GuestPieChart";
 import GuestBarChart from "./GuestBarChart";
 import { Button } from "@/components/ui/button";
+import { useGuest } from "./useGuest";
+import Spinner from "@/ui/Spinner";
+import { useMoveBack } from "@/hooks/useMoveBack";
 
 function GuestDetail() {
+  const { guest, isLoading } = useGuest();
+  const moveBack = useMoveBack();
+
+  if (isLoading) return <Spinner />;
+  // if no guest
+  console.log(guest);
+
   const data = [
     {
       title: "備註",
-      value: "常用8號染髮劑",
+      value: guest.description,
     },
     {
       title: "常用服務",
@@ -33,7 +43,7 @@ function GuestDetail() {
   return (
     <>
       <div>
-        <Button variant="link">
+        <Button variant="link" onClick={moveBack}>
           <ChevronLeft
             className="me-1 opacity-60"
             size={16}
@@ -56,7 +66,7 @@ function GuestDetail() {
               />
             </div>
             <div className="flex flex-col items-center gap-2">
-              <CardTitle>王曉明</CardTitle>
+              <CardTitle>{guest.name}</CardTitle>
               <CardDescription className="flex items-center gap-3">
                 <PhoneCall className="size-4" />
                 <span className="text-base">
