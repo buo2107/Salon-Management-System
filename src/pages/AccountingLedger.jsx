@@ -1,5 +1,7 @@
+import { DataTableDemo } from "@/ui/Test";
+
 function AccountingLedger() {
-  return <div>aco</div>;
+  return <DataTableDemo />;
 }
 
 export default AccountingLedger;
