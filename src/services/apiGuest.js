@@ -1,8 +1,11 @@
 import { PAGE_SIZE } from "@/utils/constants";
 import supabase from "./supabase";
 
-export async function getGuests({ page }) {
+export async function getGuests({ filter, page }) {
   let query = supabase.from("guests").select("*", { count: "exact" });
+
+  // FILTER
+  if (filter) query = query.like(filter.field, `%${filter.value}%`);
 
   // PAGINATION
   if (page) {
