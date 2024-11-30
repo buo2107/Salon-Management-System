@@ -39,14 +39,14 @@ export function useGuests() {
 
   if (page < pageCount)
     queryClient.prefetchQuery({
-      queryKey: ["guests", page + 1],
-      queryFn: () => getGuests({ page: page + 1 }),
+      queryKey: ["guests", filter, page + 1],
+      queryFn: () => getGuests({ filter, page: page + 1 }),
     });
 
   if (page > 1)
     queryClient.prefetchQuery({
-      queryKey: ["guests", page - 1],
-      queryFn: () => getGuests({ page: page - 1 }),
+      queryKey: ["guests", filter, page - 1],
+      queryFn: () => getGuests({ filter, page: page - 1 }),
     });
 
   return { isLoading, guests, count, error };
