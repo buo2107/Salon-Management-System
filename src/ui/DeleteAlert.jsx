@@ -11,7 +11,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { deleteGuest } from "@/services/apiGuest";
 
 function DeleteAlert({ children }) {
   return <AlertDialog>{children}</AlertDialog>;
@@ -22,7 +21,7 @@ function Trigger() {
     <AlertDialogTrigger asChild>
       <Button variant="ghost" className="w-full justify-start">
         <Trash />
-        Delete
+        刪除資料
       </Button>
     </AlertDialogTrigger>
   );

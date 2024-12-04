@@ -69,7 +69,7 @@ export default function CreateGuestForm({ guestToUpdate = {}, onCloseModal }) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="mx-auto w-full max-w-3xl space-y-8 py-10"
+        className="mx-auto w-full max-w-3xl space-y-8 px-5 py-10"
       >
         <FormField
           control={form.control}
@@ -181,7 +181,7 @@ export default function CreateGuestForm({ guestToUpdate = {}, onCloseModal }) {
           )}
         />
         <Button type="submit" disabled={isCreating}>
-          Submit
+          {isUpdateSession ? "更新客戶資料" : "新增客戶資料"}
         </Button>
       </form>
     </Form>
