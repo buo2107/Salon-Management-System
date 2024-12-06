@@ -1,8 +1,12 @@
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Modal from "@/ui/Modal";
+import CreateProductForm from "./CreateProductForm";
+import { useState } from "react";
 
 function AddProduct() {
+  const [open, setOpen] = useState(false);
+
   return (
     <Modal>
       <Modal.Trigger>
@@ -10,7 +14,9 @@ function AddProduct() {
           <Plus />
         </Button>
       </Modal.Trigger>
-      <Modal.Window />
+      <Modal.Window>
+        <CreateProductForm onCloseModal={() => setOpen(false)} />
+      </Modal.Window>
     </Modal>
   );
 }
