@@ -31,7 +31,7 @@ function ProductTableMenu() {
           <DropdownMenuItem>
             <Button variant="ghost" className="w-full justify-start">
               <Trash />
-              Delete
+              刪除
             </Button>
           </DropdownMenuItem>
         </Menu.Content>

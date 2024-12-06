@@ -180,7 +180,7 @@ export default function CreateGuestForm({ guestToUpdate = {}, onCloseModal }) {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isCreating}>
+        <Button type="submit" disabled={isCreating || isUpdating}>
           {isUpdateSession ? "更新客戶資料" : "新增客戶資料"}
         </Button>
       </form>
