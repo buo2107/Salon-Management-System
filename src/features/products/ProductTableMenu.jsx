@@ -1,4 +1,10 @@
-import { PackageMinus, PackagePlus, GripHorizontal, Trash } from "lucide-react";
+import {
+  PackageMinus,
+  PackagePlus,
+  GripHorizontal,
+  Trash,
+  Edit,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import Menu from "@/ui/Menu";
@@ -25,6 +31,14 @@ function ProductTableMenu() {
               <Button variant="ghost" className="w-full justify-start">
                 <PackageMinus />
                 退貨
+              </Button>
+            </Modal.Trigger>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Modal.Trigger>
+              <Button variant="ghost" className="w-full justify-start">
+                <Edit />
+                修改資料
               </Button>
             </Modal.Trigger>
           </DropdownMenuItem>
