@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
@@ -22,38 +21,43 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useCreateProduct } from "./useCreateProduct";
 
 const formSchema = z.object({
-  name: z.string(),
-  catagory: z.string(),
+  name: z.string().min(1, {
+    message: "此欄位為必須",
+  }),
+  catagory: z.string().min(1, {
+    message: "此欄位為必須",
+  }),
   brand: z.string().optional(),
   spec: z.string(),
-  cost: z.string(),
-  price: z.string(),
+  cost: z.number().min(0).nonnegative(),
+  price: z.number().min(0).positive(),
   img: z.string().optional(),
 });
 
-export default function CreateProductForm({ onCloseMode }) {
-  const [files, setFiles] = useState(null);
+export default function CreateProductForm({ onCloseModal }) {
+  const { createProduct, isCreating } = useCreateProduct();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      catagory: "",
+      brand: "",
+      spec: "",
+      cost: 0,
+      price: 0,
+      img: "",
+    },
   });
 
-  function onSubmit(values) {
-    console.log(values);
-    onCloseMode();
-    // try {
-    //   console.log(values);
-    //   toast(
-    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-    //       <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-    //     </pre>,
-    //   );
-    // } catch (error) {
-    //   console.error("Form submission error", error);
-    //   toast.error("Failed to submit the form. Please try again.");
-    // }
+  function onSubmit(data) {
+    console.log(data);
+    createProduct(data);
+    form.reset();
+    onCloseModal();
   }
 
   return (
@@ -71,10 +75,13 @@ export default function CreateProductForm({ onCloseMode }) {
                 商品名稱<span className="text-destructive">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" type="text" {...field} />
+                <Input type="text" {...field} />
               </FormControl>
-              <FormDescription>請輸入商品名稱</FormDescription>
-              <FormMessage />
+              {form.getFieldState(field.name).error ? (
+                <FormMessage />
+              ) : (
+                <FormDescription>請輸入商品名稱</FormDescription>
+              )}
             </FormItem>
           )}
         />
@@ -90,7 +97,7 @@ export default function CreateProductForm({ onCloseMode }) {
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a verified email to display" />
+                    <SelectValue placeholder="此商品分類為:" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -99,10 +106,13 @@ export default function CreateProductForm({ onCloseMode }) {
                   <SelectItem value="其他">其他</SelectItem>
                 </SelectContent>
               </Select>
-              <FormDescription>
-                若要建立新類別，請至<a href="#">設定</a>頁面
-              </FormDescription>
-              <FormMessage />
+              {form.getFieldState(field.catagory).error ? (
+                <FormMessage />
+              ) : (
+                <FormDescription>
+                  若要建立新類別，請至<a href="#">設定</a>頁面
+                </FormDescription>
+              )}
             </FormItem>
           )}
         />
@@ -114,7 +124,7 @@ export default function CreateProductForm({ onCloseMode }) {
               name="brand"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>商品品牌</FormLabel>
+                  <FormLabel>品牌</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -129,7 +139,6 @@ export default function CreateProductForm({ onCloseMode }) {
                       <SelectItem value="其他">其他</SelectItem>
                     </SelectContent>
                   </Select>
-                  {/* <FormDescription>error message</FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}
@@ -144,9 +153,8 @@ export default function CreateProductForm({ onCloseMode }) {
                 <FormItem>
                   <FormLabel>規格</FormLabel>
                   <FormControl>
-                    <Input placeholder="600ml" type="" {...field} />
+                    <Input placeholder="EX:600ml" type="" {...field} />
                   </FormControl>
-                  {/* <FormDescription>error message</FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}
@@ -169,8 +177,11 @@ export default function CreateProductForm({ onCloseMode }) {
                       <Input
                         className="peer pe-12 ps-10"
                         placeholder="0"
-                        type="text"
+                        type="number"
                         {...field}
+                        onChange={(event) =>
+                          field.onChange(+event.target.value)
+                        }
                       />
                       <span className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-sm text-muted-foreground peer-disabled:opacity-50">
                         NT$
@@ -180,7 +191,7 @@ export default function CreateProductForm({ onCloseMode }) {
                       </span>
                     </div>
                   </FormControl>
-                  {/* <FormDescription>error message</FormDescription> */}
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -201,8 +212,11 @@ export default function CreateProductForm({ onCloseMode }) {
                       <Input
                         className="peer pe-12 ps-10"
                         placeholder="0"
-                        type="text"
+                        type="number"
                         {...field}
+                        onChange={(event) =>
+                          field.onChange(+event.target.value)
+                        }
                       />
                       <span className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-sm text-muted-foreground peer-disabled:opacity-50">
                         NT$
@@ -212,7 +226,7 @@ export default function CreateProductForm({ onCloseMode }) {
                       </span>
                     </div>
                   </FormControl>
-                  {/* <FormDescription>error message</FormDescription> */}
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -232,12 +246,14 @@ export default function CreateProductForm({ onCloseMode }) {
                   type="file"
                 />
               </FormControl>
-              <FormDescription>Select a file to upload.</FormDescription>
+              <FormDescription>上傳商品照(非必須)</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">新增商品</Button>
+        <Button type="submit" disabled={isCreating}>
+          新增商品
+        </Button>
       </form>
     </Form>
   );

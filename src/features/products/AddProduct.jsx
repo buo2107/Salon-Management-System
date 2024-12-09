@@ -8,7 +8,7 @@ function AddProduct() {
   const [open, setOpen] = useState(false);
 
   return (
-    <Modal>
+    <Modal open={open} onOpenChange={setOpen}>
       <Modal.Trigger>
         <Button size="icon" variant="outline" className="self-end">
           <Plus />

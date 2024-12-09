@@ -1,4 +1,4 @@
-import { Trash } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,7 +20,7 @@ function Trigger() {
   return (
     <AlertDialogTrigger asChild>
       <Button variant="ghost" className="w-full justify-start">
-        <Trash />
+        <Trash2 />
         刪除資料
       </Button>
     </AlertDialogTrigger>

@@ -37,7 +37,7 @@ function ProductTable() {
               {products.map((product) => (
                 <TableRow key={product.id} className="*:text-center">
                   <TableCell>
-                    <div className="flex flex-row items-center justify-center">
+                    <div className="flex flex-row items-center">
                       <img
                         className="block aspect-3/2 w-28 -translate-x-2 scale-125 object-contain object-center"
                         src="sampoo.png"

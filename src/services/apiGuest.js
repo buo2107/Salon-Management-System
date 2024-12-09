@@ -40,7 +40,7 @@ export async function getGuest(id) {
 }
 
 export async function createGuest(newGuest) {
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("guests")
     .insert([{ ...newGuest }])
     .select();

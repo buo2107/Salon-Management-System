@@ -10,3 +10,15 @@ export async function getProducts() {
 
   return data;
 }
+
+export async function createProduct(newProduct) {
+  const { error } = await supabase
+    .from("products")
+    .insert([{ ...newProduct }])
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Product data could not be created");
+  }
+}

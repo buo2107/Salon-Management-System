@@ -2,7 +2,7 @@ import {
   PackageMinus,
   PackagePlus,
   GripHorizontal,
-  Trash,
+  Trash2,
   Edit,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -44,8 +44,8 @@ function ProductTableMenu() {
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Button variant="ghost" className="w-full justify-start">
-              <Trash />
-              刪除
+              <Trash2 />
+              刪除資料
             </Button>
           </DropdownMenuItem>
         </Menu.Content>
