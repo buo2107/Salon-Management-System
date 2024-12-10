@@ -40,8 +40,8 @@ function ProductTable() {
                     <div className="flex flex-row items-center">
                       <img
                         className="block aspect-3/2 w-28 -translate-x-2 scale-125 object-contain object-center"
-                        src="sampoo.png"
-                        alt="product"
+                        src={product.img}
+                        alt={product.catagory}
                       />
                       <span className="text-base">{product.name}</span>
                     </div>

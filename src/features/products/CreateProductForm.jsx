@@ -34,7 +34,7 @@ const formSchema = z.object({
   spec: z.string(),
   cost: z.number().min(0).nonnegative(),
   price: z.number().min(0).positive(),
-  img: z.string().optional(),
+  img: z.instanceof(File).optional().nullable(),
 });
 
 export default function CreateProductForm({ onCloseModal }) {
@@ -49,15 +49,15 @@ export default function CreateProductForm({ onCloseModal }) {
       spec: "",
       cost: 0,
       price: 0,
-      img: "",
+      img: null,
     },
   });
 
   function onSubmit(data) {
-    console.log(data);
-    createProduct(data);
-    form.reset();
-    onCloseModal();
+    console.log(data.img.name);
+    // createProduct(data);
+    // form.reset();
+    // onCloseModal();
   }
 
   return (
@@ -237,13 +237,18 @@ export default function CreateProductForm({ onCloseModal }) {
         <FormField
           control={form.control}
           name="img"
-          render={({ field }) => (
+          render={({ field: { value, onChange, ...fieldProps } }) => (
             <FormItem>
               <FormLabel>商品圖片</FormLabel>
               <FormControl>
                 <Input
                   className="pe-3 file:me-3 file:border-0 file:border-e"
                   type="file"
+                  accept="image/*"
+                  {...fieldProps}
+                  onChange={(event) =>
+                    onChange(event.target.files && event.target.files[0])
+                  }
                 />
               </FormControl>
               <FormDescription>上傳商品照(非必須)</FormDescription>
