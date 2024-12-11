@@ -54,10 +54,10 @@ export default function CreateProductForm({ onCloseModal }) {
   });
 
   function onSubmit(data) {
-    console.log(data.img.name);
-    // createProduct(data);
-    // form.reset();
-    // onCloseModal();
+    // console.log(data.img.name);
+    createProduct(data);
+    form.reset();
+    onCloseModal();
   }
 
   return (
