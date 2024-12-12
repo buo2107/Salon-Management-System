@@ -61,3 +61,12 @@ export async function createProduct(newProduct) {
     // Handle success
   }
 }
+
+export async function deleteProduct(id) {
+  const { error } = await supabase.from("products").delete().eq("id", id);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Product could not be deleted");
+  }
+}

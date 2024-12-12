@@ -50,16 +50,20 @@ function ProductTable() {
                     <Badge>{product.catagory}</Badge>
                   </TableCell>
                   <TableCell>
-                    <Badge variant="secondary">{product.brand}</Badge>
+                    {product.brand ? (
+                      <Badge variant="secondary">{product.brand}</Badge>
+                    ) : (
+                      "--"
+                    )}
                   </TableCell>
-                  <TableCell>{product.spec}</TableCell>
+                  <TableCell>{product.spec ? product.spec : "--"}</TableCell>
                   <TableCell>
                     {product.cost} / {product.price}
                   </TableCell>
                   <TableCell>2024/2/3</TableCell>
                   <TableCell>{product.stock}</TableCell>
                   <TableCell>
-                    <ProductTableMenu />
+                    <ProductTableMenu data={product} />
                   </TableCell>
                 </TableRow>
               ))}
