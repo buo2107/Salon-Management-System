@@ -4,6 +4,7 @@ import {
   SquareScissors,
   Users,
   BadgeDollarSign,
+  SlidersHorizontal,
 } from "lucide-react";
 import {
   SidebarGroup,
@@ -38,6 +39,11 @@ const navList = [
     title: "記帳本",
     icon: BadgeDollarSign,
     link: "/accountingLedger",
+  },
+  {
+    title: "設定",
+    icon: SlidersHorizontal,
+    link: "/settings",
   },
 ];
 
