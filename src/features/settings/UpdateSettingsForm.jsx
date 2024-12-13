@@ -16,7 +16,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { TagsInput } from "@/components/ui/tags-input";
+import TagsInput from "@/ui/TagsInput";
+// import { TagsInput } from "@/components/ui/tags-input";
 
 const formSchema = z.object({
   stock: z.string(),
@@ -75,11 +76,11 @@ export default function UpdateSettingsForm() {
             <FormItem>
               <FormLabel>商品類別</FormLabel>
               <FormControl>
-                <TagsInput
+                {/* <TagsInput
                   value={field.value}
                   onValueChange={field.onChange}
                   placeholder="Enter your tags"
-                />
+                /> */}
               </FormControl>
               <FormDescription>Add tags.</FormDescription>
               <FormMessage />
@@ -94,11 +95,7 @@ export default function UpdateSettingsForm() {
             <FormItem>
               <FormLabel>商品品牌</FormLabel>
               <FormControl>
-                <TagsInput
-                  value={field.value}
-                  onValueChange={field.onChange}
-                  placeholder="Enter your tags"
-                />
+                <TagsInput />
               </FormControl>
               <FormDescription>Add tags.</FormDescription>
               <FormMessage />

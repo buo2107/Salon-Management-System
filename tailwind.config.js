@@ -2,7 +2,11 @@
 // eslint-disable-next-line
 export default {
   darkMode: ["class"],
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/emblor/dist/index.mjs",
+  ],
   theme: {
     fontFamily: {
       sans: "LXGW WenKai Mono TC, Rubik, monospace",
