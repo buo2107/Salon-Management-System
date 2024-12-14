@@ -1,4 +1,3 @@
-import { Label } from "@/components/ui/label";
 import { TagInput } from "emblor";
 import { useState } from "react";
 

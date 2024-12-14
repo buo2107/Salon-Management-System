@@ -1,10 +1,6 @@
-"use client";
-import { useState } from "react";
-import { toast } from "sonner";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { cn } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -17,35 +13,49 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import TagsInput from "@/ui/TagsInput";
-// import { TagsInput } from "@/components/ui/tags-input";
 
 const formSchema = z.object({
   stock: z.string(),
-  productCatagory: z.array(z.string()).nonempty("Please at least one item"),
-  productBrand: z.array(z.string()).nonempty("Please at least one item"),
+  productCatagory: z.array(
+    z.object({
+      id: z.string(),
+      text: z.string(),
+    }),
+  ),
+  productBrand: z.array(
+    z.object({
+      id: z.string(),
+      text: z.string(),
+    }),
+  ),
+  //   z.array(z.string()).nonempty("Please at least one item"),
 });
 
-export default function UpdateSettingsForm() {
+export default function UpdateSettingsForm({ settings }) {
+  const { minimum_stock, catagory_list, brand_list } = settings;
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      productCatagory: ["test"],
-      productBrand: ["test"],
+      minimum_stock,
+      catagory_list,
+      brand_list,
     },
   });
 
-  function onSubmit(values) {
-    try {
-      console.log(values);
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>,
-      );
-    } catch (error) {
-      console.error("Form submission error", error);
-      toast.error("Failed to submit the form. Please try again.");
-    }
+  function onSubmit(data) {
+    console.log(data);
+    // try {
+    //   console.log(values);
+    //   toast(
+    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+    //       <code className="text-white">{JSON.stringify(values, null, 2)}</code>
+    //     </pre>,
+    //   );
+    // } catch (error) {
+    //   console.error("Form submission error", error);
+    //   toast.error("Failed to submit the form. Please try again.");
+    // }
   }
 
   return (
@@ -56,14 +66,14 @@ export default function UpdateSettingsForm() {
       >
         <FormField
           control={form.control}
-          name="stock"
+          name="minimum_stock"
           render={({ field }) => (
             <FormItem>
               <FormLabel>最低庫存</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" type="" {...field} />
+                <Input placeholder="0" type="" {...field} />
               </FormControl>
-              <FormDescription>This is your limit stock</FormDescription>
+              <FormDescription>商品低於此庫存量時提醒我</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -71,18 +81,14 @@ export default function UpdateSettingsForm() {
 
         <FormField
           control={form.control}
-          name="productCatagory"
+          name="catagory_list"
           render={({ field }) => (
             <FormItem>
               <FormLabel>商品類別</FormLabel>
               <FormControl>
-                {/* <TagsInput
-                  value={field.value}
-                  onValueChange={field.onChange}
-                  placeholder="Enter your tags"
-                /> */}
+                <TagsInput />
               </FormControl>
-              <FormDescription>Add tags.</FormDescription>
+              {/* <FormDescription>Add tags.…</FormDescription> */}
               <FormMessage />
             </FormItem>
           )}
@@ -90,14 +96,14 @@ export default function UpdateSettingsForm() {
 
         <FormField
           control={form.control}
-          name="productBrand"
+          name="brand_list"
           render={({ field }) => (
             <FormItem>
               <FormLabel>商品品牌</FormLabel>
               <FormControl>
                 <TagsInput />
               </FormControl>
-              <FormDescription>Add tags.</FormDescription>
+              {/* <FormDescription>Add tags.</FormDescription> */}
               <FormMessage />
             </FormItem>
           )}
