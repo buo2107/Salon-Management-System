@@ -34,3 +34,14 @@ export const formatPhoneNumber = function (number) {
 
   return formatPhone;
 };
+
+export const formatToTagsInput = function (array) {
+  const formatTags = array.map((value, index) => {
+    return {
+      id: index + 1,
+      text: value,
+    };
+  });
+
+  return formatTags;
+};

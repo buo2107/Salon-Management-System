@@ -3,7 +3,7 @@ import AppLayout from "./ui/AppLayout";
 import Dashboard from "./pages/Dashboard";
 import Bookings from "./pages/Bookings";
 import Products from "./pages/Products";
-import Product from "./pages/Product";
+import Services from "./pages/Services";
 import Settings from "./pages/Settings";
 import Guests from "./pages/Guests";
 import Login from "./pages/Login";
@@ -35,7 +35,7 @@ function App() {
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="bookings" element={<Bookings />} />
               <Route path="products" element={<Products />} />
-              <Route path="products/:productId" element={<Product />} />
+              <Route path="services" element={<Services />} />
               <Route path="guests" element={<Guests />} />
               <Route path="guests/:guestId" element={<GuestDetail />} />
               {/* <Route path="users" element={<Users />} /> */}

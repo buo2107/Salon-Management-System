@@ -5,6 +5,7 @@ import {
   Users,
   BadgeDollarSign,
   SlidersHorizontal,
+  BaggageClaim,
 } from "lucide-react";
 import {
   SidebarGroup,
@@ -26,9 +27,14 @@ const navList = [
     link: "/bookings",
   },
   {
-    title: "服務/商品",
-    icon: SquareScissors,
+    title: "商品列表",
+    icon: BaggageClaim,
     link: "/products",
+  },
+  {
+    title: "服務項目",
+    icon: SquareScissors,
+    link: "/services",
   },
   {
     title: "客戶資料",

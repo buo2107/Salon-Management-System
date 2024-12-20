@@ -1,28 +1,29 @@
 import { TagInput } from "emblor";
 import { useState } from "react";
 
-const tags = [
-  {
-    id: "1",
-    text: "Sport",
-  },
-  {
-    id: "2",
-    text: "Coding",
-  },
-  {
-    id: "3",
-    text: "Travel",
-  },
-];
+// const tags = [
+//   {
+//     id: "1",
+//     text: "Sport",
+//   },
+//   {
+//     id: "2",
+//     text: "Coding",
+//   },
+//   {
+//     id: "3",
+//     text: "Travel",
+//   },
+// ];
 
-export default function TagsInput() {
+export default function TagsInput({ tags, field }) {
   const [exampleTags, setExampleTags] = useState(tags);
   const [activeTagIndex, setActiveTagIndex] = useState(null);
 
   return (
     <div className="space-y-2">
       <TagInput
+        {...field}
         tags={exampleTags}
         setTags={(newTags) => {
           setExampleTags(newTags);
