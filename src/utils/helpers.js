@@ -38,7 +38,7 @@ export const formatPhoneNumber = function (number) {
 export const formatToTagsInput = function (array) {
   const formatTags = array.map((value, index) => {
     return {
-      id: index + 1,
+      id: `${index + 1}`,
       text: value,
     };
   });

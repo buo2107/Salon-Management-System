@@ -10,3 +10,16 @@ export async function getSettings() {
 
   return data;
 }
+
+export async function updateSettings(updateData) {
+  const { data, error } = await supabase
+    .from("settings")
+    .update(updateData)
+    .eq("id", 1)
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Settings could not be updated");
+  }
+}

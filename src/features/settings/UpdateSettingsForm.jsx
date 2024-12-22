@@ -14,10 +14,11 @@ import {
 import { Input } from "@/components/ui/input";
 import TagsInput from "@/ui/TagsInput";
 import { formatToTagsInput } from "@/utils/helpers";
+import { useUpdateSettings } from "./useUpdateSettings";
 
 const formSchema = z.object({
-  stock: z.number().min(0).nonnegative().optional(),
-  productCatagory: z
+  minimum_stock: z.number().min(0).nonnegative().optional(),
+  catagory_list: z
     .array(
       z.object({
         id: z.string(),
@@ -25,7 +26,7 @@ const formSchema = z.object({
       }),
     )
     .optional(),
-  productBrand: z
+  brand_list: z
     .array(
       z.object({
         id: z.string(),
@@ -33,23 +34,30 @@ const formSchema = z.object({
       }),
     )
     .optional(),
-  //   z.array(z.string()).nonempty("Please at least one item"),
 });
 
 export default function UpdateSettingsForm({ settings }) {
+  const { updateSettings, isUpdating } = useUpdateSettings();
+
   const { minimum_stock, catagory_list, brand_list } = settings;
+  const initialCatagoryList = formatToTagsInput(catagory_list);
+  const initialBrandList = formatToTagsInput(brand_list);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       minimum_stock,
-      catagory_list,
-      brand_list,
+      catagory_list: initialCatagoryList,
+      brand_list: initialBrandList,
     },
   });
 
   function onSubmit(data) {
-    console.log(data);
+    const cl = data.catagory_list.map((item) => item.text);
+    const bl = data.brand_list.map((item) => item.text);
+    const newSettings = { ...data, catagory_list: cl, brand_list: bl };
+    console.log(newSettings);
+    updateSettings(newSettings);
   }
 
   return (
@@ -65,7 +73,11 @@ export default function UpdateSettingsForm({ settings }) {
             <FormItem>
               <FormLabel>最低庫存</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <Input
+                  type="number"
+                  {...field}
+                  onChange={(event) => field.onChange(+event.target.value)}
+                />
               </FormControl>
               <FormDescription>商品低於此庫存量時提醒我</FormDescription>
               <FormMessage />
@@ -73,7 +85,7 @@ export default function UpdateSettingsForm({ settings }) {
           )}
         />
 
-        {/* <FormField
+        <FormField
           control={form.control}
           name="catagory_list"
           render={({ field }) => (
@@ -81,29 +93,38 @@ export default function UpdateSettingsForm({ settings }) {
               <FormLabel>商品類別</FormLabel>
               <FormControl>
                 <TagsInput
-                  tags={formatToTagsInput(catagory_list)}
+                  initialTags={initialCatagoryList}
                   field={field}
+                  fieldName={"catagory_list"}
+                  setValue={form.setValue}
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
-        /> */}
+        />
 
-        {/* <FormField
+        <FormField
           control={form.control}
           name="brand_list"
           render={({ field }) => (
             <FormItem>
               <FormLabel>商品品牌</FormLabel>
               <FormControl>
-                <TagsInput tags={formatToTagsInput(brand_list)} field={field} />
+                <TagsInput
+                  initialTags={initialBrandList}
+                  field={field}
+                  fieldName={"brand_list"}
+                  setValue={form.setValue}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
-        /> */}
-        <Button type="submit">Submit</Button>
+        />
+        <Button type="submit" disabled={isUpdating}>
+          儲存修改
+        </Button>
       </form>
     </Form>
   );
