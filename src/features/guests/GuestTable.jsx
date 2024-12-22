@@ -30,15 +30,7 @@ const columns = [
   {
     accessorKey: "name",
     header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          客戶姓名
-          <ArrowUpDown />
-        </Button>
-      );
+      return <Button variant="ghost">客戶姓名</Button>;
     },
     cell: ({ row }) => <div className="text-base">{row.getValue("name")}</div>,
   },
@@ -63,15 +55,7 @@ const columns = [
     accessorKey: "phone_number",
 
     header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          電話號碼
-          <ArrowUpDown />
-        </Button>
-      );
+      return <Button variant="ghost">電話號碼</Button>;
     },
     cell: ({ row }) => {
       const formatted = formatPhoneNumber(row.getValue("phone_number"));
