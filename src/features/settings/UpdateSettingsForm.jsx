@@ -1,7 +1,6 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -12,12 +11,17 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import TagsInput from "@/ui/TagsInput";
+import { Button } from "@/components/ui/button";
 import { formatToTagsInput } from "@/utils/helpers";
 import { useUpdateSettings } from "./useUpdateSettings";
+import TagsInput from "@/ui/TagsInput";
 
 const formSchema = z.object({
-  minimum_stock: z.number().min(0).nonnegative().optional(),
+  minimum_stock: z
+    .number()
+    .min(0, { message: "最低庫存不得為負數" })
+    .nonnegative()
+    .optional(),
   catagory_list: z
     .array(
       z.object({
@@ -53,10 +57,22 @@ export default function UpdateSettingsForm({ settings }) {
   });
 
   function onSubmit(data) {
-    const cl = data.catagory_list.map((item) => item.text);
-    const bl = data.brand_list.map((item) => item.text);
-    const newSettings = { ...data, catagory_list: cl, brand_list: bl };
-    console.log(newSettings);
+    const newCatagory = data.catagory_list.map((item) => item.text);
+    const newBrand = data.brand_list.map((item) => item.text);
+
+    // if no data changed, return
+    if (
+      data.minimum_stock === minimum_stock &&
+      JSON.stringify(newCatagory) === JSON.stringify(catagory_list) &&
+      JSON.stringify(newBrand) === JSON.stringify(brand_list)
+    )
+      return;
+
+    const newSettings = {
+      ...data,
+      catagory_list: newCatagory,
+      brand_list: newBrand,
+    };
     updateSettings(newSettings);
   }
 
