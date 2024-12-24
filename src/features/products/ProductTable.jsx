@@ -41,6 +41,7 @@ function ProductTable() {
             <TableBody>
               {products.length === 0 ? (
                 <TableRow>
+                  {/* Mobile may need to change the colSpan */}
                   <TableCell colSpan={8} className="h-24 text-center">
                     <span>目前沒有商品</span>
                   </TableCell>

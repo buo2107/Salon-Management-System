@@ -12,6 +12,7 @@ import { useSearchParams } from "react-router-dom";
 function Filter() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { settings, isLoading } = useSettings();
+  const currentFilter = searchParams.get("filter") || "all";
 
   function handleValueChange(value) {
     searchParams.set("filter", value);
@@ -20,7 +21,10 @@ function Filter() {
   console.log(settings);
 
   return (
-    <Select defaultValue="all" onValueChange={handleValueChange}>
+    <Select
+      defaultValue={currentFilter === "all" ? "all" : currentFilter}
+      onValueChange={handleValueChange}
+    >
       <SelectTrigger>
         <SelectValue placeholder="選擇篩選條件" />
       </SelectTrigger>
