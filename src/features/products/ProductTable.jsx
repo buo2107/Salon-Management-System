@@ -39,43 +39,54 @@ function ProductTable() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {products.map((product) => (
-                <TableRow key={product.id} className="*:text-center">
-                  <TableCell>
-                    <div className="flex flex-row items-center">
-                      {/* <img
+              {products.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={8} className="h-24 text-center">
+                    <span>目前沒有商品</span>
+                  </TableCell>
+                </TableRow>
+              ) : (
+                products.map((product) => (
+                  <TableRow key={product.id} className="*:text-center">
+                    <TableCell>
+                      <div className="flex flex-row items-center">
+                        {/* <img
                         className="block aspect-3/2 w-28 -translate-x-2 scale-125 object-contain object-center"
                         src={product.img}
                         alt={product.catagory}
                       /> */}
-                      <span className="text-base">{product.name}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <Badge>{product.catagory}</Badge>
-                  </TableCell>
-                  <TableCell>
-                    {product.brand ? (
-                      <Badge variant="secondary">{product.brand}</Badge>
-                    ) : (
-                      "--"
-                    )}
-                  </TableCell>
-                  <TableCell>{product.spec ? product.spec : "--"}</TableCell>
-                  <TableCell>
-                    <div className="flex flex-row items-center justify-center">
-                      {product.cost}{" "}
-                      <Separator orientation="vertical" className="mx-2 h-4" />{" "}
-                      {product.price}
-                    </div>
-                  </TableCell>
-                  <TableCell>2024/2/3</TableCell>
-                  <TableCell>{product.stock}</TableCell>
-                  <TableCell>
-                    <ProductTableMenu data={product} />
-                  </TableCell>
-                </TableRow>
-              ))}
+                        <span className="text-base">{product.name}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <Badge>{product.catagory}</Badge>
+                    </TableCell>
+                    <TableCell>
+                      {product.brand ? (
+                        <Badge variant="secondary">{product.brand}</Badge>
+                      ) : (
+                        "--"
+                      )}
+                    </TableCell>
+                    <TableCell>{product.spec ? product.spec : "--"}</TableCell>
+                    <TableCell>
+                      <div className="flex flex-row items-center justify-center">
+                        {product.cost}{" "}
+                        <Separator
+                          orientation="vertical"
+                          className="mx-2 h-4"
+                        />{" "}
+                        {product.price}
+                      </div>
+                    </TableCell>
+                    <TableCell>2024/2/3</TableCell>
+                    <TableCell>{product.stock}</TableCell>
+                    <TableCell>
+                      <ProductTableMenu data={product} />
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </div>
