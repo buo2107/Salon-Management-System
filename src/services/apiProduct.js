@@ -1,7 +1,12 @@
 import supabase from "./supabase";
 
-export async function getProducts() {
-  let { data, error } = await supabase.from("products").select("*");
+export async function getProducts({ filter }) {
+  let query = supabase.from("products").select("*", { count: "exact" });
+
+  // FILTER
+  if (filter) query = query.eq(filter.field, filter.value);
+
+  let { data, error } = await query;
 
   if (error) {
     console.error(error);

@@ -31,7 +31,7 @@ function Filter() {
             <SelectGroup>
               <SelectLabel>商品類型</SelectLabel>
               {settings.catagory_list.map((catagory) => (
-                <SelectItem key={catagory} value={catagory}>
+                <SelectItem key={catagory} value={catagory + "c"}>
                   {catagory}
                 </SelectItem>
               ))}
@@ -39,7 +39,7 @@ function Filter() {
             <SelectGroup>
               <SelectLabel>商品品牌</SelectLabel>
               {settings.brand_list.map((brand) => (
-                <SelectItem key={brand} value={brand + "brand"}>
+                <SelectItem key={brand} value={brand + "b"}>
                   {brand}
                 </SelectItem>
               ))}
