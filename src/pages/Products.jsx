@@ -1,5 +1,6 @@
 import AddProduct from "@/features/products/AddProduct";
 import ProductTable from "@/features/products/ProductTable";
+import ProductTableOperations from "@/features/products/ProductTableOperations";
 import Heading from "@/ui/Heading";
 
 function Products() {
@@ -8,7 +9,10 @@ function Products() {
       <Heading>商品資料</Heading>
 
       <div className="flex flex-col gap-3">
-        <AddProduct />
+        <div className="flex flex-row items-center justify-between">
+          <ProductTableOperations />
+          <AddProduct />
+        </div>
 
         <ProductTable />
       </div>
