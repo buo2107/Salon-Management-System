@@ -22,6 +22,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useCreateProduct } from "./useCreateProduct";
+import { useSettings } from "../settings/useSettings";
+import Spinner from "@/ui/Spinner";
+import { useUpdateProduct } from "./useUpdateProduct";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -34,207 +37,231 @@ const formSchema = z.object({
   spec: z.string(),
   cost: z.number().min(0).nonnegative(),
   price: z.number().min(0).positive(),
-  img: z.instanceof(File).optional().nullable(),
+  // img: z.instanceof(File).optional().nullable(),
 });
 
-export default function CreateProductForm({ onCloseModal }) {
+export default function CreateProductForm({
+  productToUpdate = {},
+  onCloseModal,
+}) {
   const { createProduct, isCreating } = useCreateProduct();
+  const { updateProduct, isUpdating } = useUpdateProduct();
+  const { settings, isLoading } = useSettings();
+
+  // Confirm whether is in update mode or not
+  const { id: productId, ...updateValues } = productToUpdate;
+  const isUpdateSession = Boolean(productId);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      catagory: "",
-      brand: "",
-      spec: "",
-      cost: 0,
-      price: 0,
-      img: null,
-    },
+    defaultValues: isUpdateSession
+      ? updateValues
+      : {
+          name: "",
+          catagory: "",
+          brand: "",
+          spec: "",
+          cost: 0,
+          price: 0,
+          // img: null,
+        },
   });
 
   function onSubmit(data) {
-    // console.log(data.img.name);
-    createProduct(data);
+    if (isUpdateSession)
+      updateProduct({ updateData: { ...data }, id: productId });
+    else createProduct(data);
+
     form.reset();
     onCloseModal();
   }
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="mx-auto w-full max-w-3xl space-y-8 px-8 py-10"
-      >
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                商品名稱<span className="text-destructive">*</span>
-              </FormLabel>
-              <FormControl>
-                <Input type="text" {...field} />
-              </FormControl>
-              {form.getFieldState(field.name).error ? (
-                <FormMessage />
-              ) : (
-                <FormDescription>請輸入商品名稱</FormDescription>
-              )}
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="catagory"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                商品類別<span className="text-destructive">*</span>
-              </FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="mx-auto w-full max-w-3xl space-y-8 px-8 py-10"
+        >
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  商品名稱<span className="text-destructive">*</span>
+                </FormLabel>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="此商品分類為:" />
-                  </SelectTrigger>
+                  <Input type="text" {...field} />
                 </FormControl>
-                <SelectContent>
-                  <SelectItem value="洗髮精">洗髮精</SelectItem>
-                  <SelectItem value="技術">技術</SelectItem>
-                  <SelectItem value="其他">其他</SelectItem>
-                </SelectContent>
-              </Select>
-              {form.getFieldState(field.catagory).error ? (
-                <FormMessage />
-              ) : (
-                <FormDescription>
-                  若要建立新類別，請至<a href="#">設定</a>頁面
-                </FormDescription>
-              )}
-            </FormItem>
-          )}
-        />
+                {form.getFieldState(field.name).error ? (
+                  <FormMessage />
+                ) : (
+                  <FormDescription>請輸入商品名稱</FormDescription>
+                )}
+              </FormItem>
+            )}
+          />
 
-        <div className="grid grid-cols-12 gap-4">
-          <div className="col-span-6">
-            <FormField
-              control={form.control}
-              name="brand"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>品牌</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+          <FormField
+            control={form.control}
+            name="catagory"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  商品類別<span className="text-destructive">*</span>
+                </FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="此商品分類為:" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {settings.catagory_list?.map((item) => (
+                      <SelectItem key={item} value={item}>
+                        {item}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {form.getFieldState(field.catagory).error ? (
+                  <FormMessage />
+                ) : (
+                  <FormDescription>
+                    若要建立新類別，請至<a href="#">設定</a>頁面
+                  </FormDescription>
+                )}
+              </FormItem>
+            )}
+          />
+
+          <div className="grid grid-cols-12 gap-4">
+            <div className="col-span-6">
+              <FormField
+                control={form.control}
+                name="brand"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>品牌</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="選擇品牌" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {settings.brand_list?.map((item) => (
+                          <SelectItem key={item} value={item}>
+                            {item}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="col-span-6">
+              <FormField
+                control={form.control}
+                name="spec"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>規格</FormLabel>
                     <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="選擇品牌" />
-                      </SelectTrigger>
+                      <Input placeholder="EX:600ml" type="" {...field} />
                     </FormControl>
-                    <SelectContent>
-                      <SelectItem value="川越">川越</SelectItem>
-                      <SelectItem value="其他">其他</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
 
-          <div className="col-span-6">
-            <FormField
-              control={form.control}
-              name="spec"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>規格</FormLabel>
-                  <FormControl>
-                    <Input placeholder="EX:600ml" type="" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <div className="grid grid-cols-12 gap-4">
+            <div className="col-span-6">
+              <FormField
+                control={form.control}
+                name="cost"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      成本<span className="text-destructive">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          className="peer pe-12 ps-10"
+                          placeholder="0"
+                          type="number"
+                          {...field}
+                          onChange={(event) =>
+                            field.onChange(+event.target.value)
+                          }
+                        />
+                        <span className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-sm text-muted-foreground peer-disabled:opacity-50">
+                          NT$
+                        </span>
+                        <span className="pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-sm text-muted-foreground peer-disabled:opacity-50">
+                          TWD
+                        </span>
+                      </div>
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="col-span-6">
+              <FormField
+                control={form.control}
+                name="price"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      售價<span className="text-destructive">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          className="peer pe-12 ps-10"
+                          placeholder="0"
+                          type="number"
+                          {...field}
+                          onChange={(event) =>
+                            field.onChange(+event.target.value)
+                          }
+                        />
+                        <span className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-sm text-muted-foreground peer-disabled:opacity-50">
+                          NT$
+                        </span>
+                        <span className="pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-sm text-muted-foreground peer-disabled:opacity-50">
+                          TWD
+                        </span>
+                      </div>
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
-        </div>
 
-        <div className="grid grid-cols-12 gap-4">
-          <div className="col-span-6">
-            <FormField
-              control={form.control}
-              name="cost"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    成本<span className="text-destructive">*</span>
-                  </FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <Input
-                        className="peer pe-12 ps-10"
-                        placeholder="0"
-                        type="number"
-                        {...field}
-                        onChange={(event) =>
-                          field.onChange(+event.target.value)
-                        }
-                      />
-                      <span className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-sm text-muted-foreground peer-disabled:opacity-50">
-                        NT$
-                      </span>
-                      <span className="pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-sm text-muted-foreground peer-disabled:opacity-50">
-                        TWD
-                      </span>
-                    </div>
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <div className="col-span-6">
-            <FormField
-              control={form.control}
-              name="price"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    售價<span className="text-destructive">*</span>
-                  </FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <Input
-                        className="peer pe-12 ps-10"
-                        placeholder="0"
-                        type="number"
-                        {...field}
-                        onChange={(event) =>
-                          field.onChange(+event.target.value)
-                        }
-                      />
-                      <span className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-sm text-muted-foreground peer-disabled:opacity-50">
-                        NT$
-                      </span>
-                      <span className="pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-sm text-muted-foreground peer-disabled:opacity-50">
-                        TWD
-                      </span>
-                    </div>
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
-
-        <FormField
+          {/* <FormField
           control={form.control}
           name="img"
           render={({ field: { value, onChange, ...fieldProps } }) => (
@@ -255,11 +282,12 @@ export default function CreateProductForm({ onCloseModal }) {
               <FormMessage />
             </FormItem>
           )}
-        />
-        <Button type="submit" disabled={isCreating}>
-          新增商品
-        </Button>
-      </form>
+        /> */}
+          <Button type="submit" disabled={isCreating || isUpdating}>
+            {isUpdateSession ? "更新商品" : "新增商品"}
+          </Button>
+        </form>
+      )}
     </Form>
   );
 }

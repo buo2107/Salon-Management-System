@@ -5,11 +5,14 @@ import Menu from "@/ui/Menu";
 import Modal from "@/ui/Modal";
 import DeleteAlert from "@/ui/DeleteAlert";
 import { useDeleteProduct } from "./useDeleteProduct";
+import CreateProductForm from "./CreateProductForm";
+import { useState } from "react";
 
 function ProductTableMenu({ data }) {
+  const [open, setOpen] = useState(false);
   const { deleteProduct } = useDeleteProduct();
   return (
-    <Modal>
+    <Modal open={open} onOpenChange={setOpen}>
       <DeleteAlert>
         <Menu>
           <Menu.Trigger>
@@ -50,7 +53,10 @@ function ProductTableMenu({ data }) {
           </Menu.Content>
         </Menu>
         <Modal.Window>
-          <form></form>
+          <CreateProductForm
+            productToUpdate={data}
+            onCloseModal={() => setOpen(false)}
+          />
         </Modal.Window>
         <DeleteAlert.Window onConfirm={() => deleteProduct(data.id)} />
       </DeleteAlert>

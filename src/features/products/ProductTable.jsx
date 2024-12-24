@@ -10,6 +10,7 @@ import {
 import ProductTableMenu from "./ProductTableMenu";
 import { useProducts } from "./useProducts";
 import Spinner from "@/ui/Spinner";
+import { Separator } from "@/components/ui/separator";
 
 function ProductTable() {
   const { isLoading, products } = useProducts();
@@ -27,7 +28,11 @@ function ProductTable() {
                 <TableHead>類別</TableHead>
                 <TableHead>品牌</TableHead>
                 <TableHead>規格</TableHead>
-                <TableHead>成本/售價</TableHead>
+                <TableHead className="flex flex-row items-center justify-center">
+                  成本
+                  <Separator orientation="vertical" className="mx-2 h-4" />
+                  售價
+                </TableHead>
                 <TableHead>上次進貨日期</TableHead>
                 <TableHead>庫存</TableHead>
                 <TableHead></TableHead>
@@ -38,11 +43,11 @@ function ProductTable() {
                 <TableRow key={product.id} className="*:text-center">
                   <TableCell>
                     <div className="flex flex-row items-center">
-                      <img
+                      {/* <img
                         className="block aspect-3/2 w-28 -translate-x-2 scale-125 object-contain object-center"
                         src={product.img}
                         alt={product.catagory}
-                      />
+                      /> */}
                       <span className="text-base">{product.name}</span>
                     </div>
                   </TableCell>
@@ -58,7 +63,11 @@ function ProductTable() {
                   </TableCell>
                   <TableCell>{product.spec ? product.spec : "--"}</TableCell>
                   <TableCell>
-                    {product.cost} / {product.price}
+                    <div className="flex flex-row items-center justify-center">
+                      {product.cost}{" "}
+                      <Separator orientation="vertical" className="mx-2 h-4" />{" "}
+                      {product.price}
+                    </div>
                   </TableCell>
                   <TableCell>2024/2/3</TableCell>
                   <TableCell>{product.stock}</TableCell>
