@@ -18,7 +18,6 @@ function Filter() {
     searchParams.set("filter", value);
     setSearchParams(searchParams);
   }
-  console.log(settings);
 
   return (
     <Select

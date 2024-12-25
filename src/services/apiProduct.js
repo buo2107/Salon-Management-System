@@ -1,19 +1,33 @@
+import { PAGE_SIZE } from "@/utils/constants";
 import supabase from "./supabase";
 
-export async function getProducts({ filter }) {
+export async function getProducts({ filter, sortBy, page }) {
   let query = supabase.from("products").select("*", { count: "exact" });
 
   // FILTER
   if (filter) query = query.eq(filter.field, filter.value);
 
-  let { data, error } = await query;
+  // SORT
+  if (sortBy)
+    query = query.order(sortBy.field, {
+      ascending: sortBy.direction === "asc",
+    });
+
+  // PAGINATION
+  if (page) {
+    const from = (page - 1) * PAGE_SIZE;
+    const to = from + PAGE_SIZE - 1;
+    query = query.range(from, to);
+  }
+
+  let { data, error, count } = await query;
 
   if (error) {
     console.error(error);
     throw new Error("Products data could not be loaded");
   }
 
-  return data;
+  return { data, count };
 }
 
 export async function createProduct(newProduct) {
