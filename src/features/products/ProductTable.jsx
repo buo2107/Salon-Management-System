@@ -7,11 +7,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import ProductTableMenu from "./ProductTableMenu";
-import { useProducts } from "./useProducts";
 import Spinner from "@/ui/Spinner";
-import { Separator } from "@/components/ui/separator";
 import Pagination from "@/ui/Pagination";
+import { formatCurrency } from "@/utils/helpers";
+import { useProducts } from "./useProducts";
+import ProductTableMenu from "./ProductTableMenu";
 
 function ProductTable() {
   const { isLoading, products, count } = useProducts();
@@ -25,16 +25,12 @@ function ProductTable() {
           <div className="rounded-md border-2">
             <Table>
               <TableHeader>
-                <TableRow className="text-base *:text-center *:font-semibold">
-                  <TableHead className="text-center">名稱</TableHead>
+                <TableRow className="text-sm *:text-center">
+                  <TableHead>名稱</TableHead>
                   <TableHead>類別</TableHead>
                   <TableHead>品牌</TableHead>
                   <TableHead>規格</TableHead>
-                  <TableHead className="flex flex-row items-center justify-center">
-                    成本
-                    <Separator orientation="vertical" className="mx-2 h-4" />
-                    售價
-                  </TableHead>
+                  <TableHead>售價</TableHead>
                   <TableHead>上次進貨日期</TableHead>
                   <TableHead>庫存</TableHead>
                   <TableHead></TableHead>
@@ -72,20 +68,19 @@ function ProductTable() {
                         )}
                       </TableCell>
                       <TableCell>
-                        {product.spec ? product.spec : "--"}
+                        <span className="text-sm">
+                          {product.spec ? product.spec : "--"}
+                        </span>
                       </TableCell>
                       <TableCell>
-                        <div className="flex flex-row items-center justify-center">
-                          {product.cost}{" "}
-                          <Separator
-                            orientation="vertical"
-                            className="mx-2 h-4"
-                          />{" "}
-                          {product.price}
-                        </div>
+                        <span className="font-semibold">
+                          {formatCurrency(product.price)}
+                        </span>
                       </TableCell>
-                      <TableCell>2024/2/3</TableCell>
-                      <TableCell>{product.stock}</TableCell>
+                      <TableCell></TableCell>
+                      <TableCell>
+                        <span className="font-semibold">{product.stock}</span>
+                      </TableCell>
                       <TableCell>
                         <ProductTableMenu data={product} />
                       </TableCell>

@@ -24,9 +24,11 @@ export const getToday = function (options = {}) {
 };
 
 export const formatCurrency = (value) =>
-  new Intl.NumberFormat("en", { style: "currency", currency: "USD" }).format(
-    value,
-  );
+  new Intl.NumberFormat("en", {
+    style: "currency",
+    currency: "TWD",
+    maximumFractionDigits: 0,
+  }).format(value);
 
 export const formatPhoneNumber = function (number) {
   const formatPhone =
