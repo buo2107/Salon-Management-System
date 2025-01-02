@@ -7,7 +7,7 @@ export function useGuests() {
   const [searchParams] = useSearchParams();
   const queryClient = useQueryClient();
 
-  // FILTER
+  // SEARCH - TODO figure out the search value is number or string, if it is number, search for phone number; otherwise, search for guest name
   const filterField = searchParams.get("name")
     ? "name"
     : searchParams.get("phone_number")

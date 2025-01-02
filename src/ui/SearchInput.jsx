@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 
 function SearchInput({ field, placeholder }) {
   const [searchParams, setSearchParams] = useSearchParams();
+  // TODO searchParams.set("search", `${field}-${e.target.value}`)
 
   function handleCompositionStart(e) {
     e.target.composing = true;

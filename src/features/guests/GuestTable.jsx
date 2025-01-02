@@ -1,4 +1,4 @@
-import { formatPhoneNumber } from "@/utils/helpers";
+import { formatPhoneNumber, formatCurrency } from "@/utils/helpers";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -14,6 +14,7 @@ import GuestTableMenu from "./GuestTableMenu";
 import GuestTableOperations from "./GuestTableOperations";
 import { useGuests } from "./useGuests";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 function GuestTable() {
   const { isLoading, guests, count } = useGuests();
@@ -33,11 +34,12 @@ function GuestTable() {
                 <TableHead>姓名</TableHead>
                 <TableHead>聯絡電話</TableHead>
                 <TableHead>
-                  <div className="space-x-2">
+                  <div className="flex items-center justify-center space-x-2">
                     <Checkbox id="vip" />
-                    <label htmlFor="vip">VIP</label>
+                    <label htmlFor="vip">會員</label>
                   </div>
                 </TableHead>
+                <TableHead>點數卡</TableHead>
                 <TableHead>備註</TableHead>
                 <TableHead></TableHead>
               </TableRow>
@@ -65,7 +67,25 @@ function GuestTable() {
                         {formatPhoneNumber(guest.phone_number)}
                       </div>
                     </TableCell>
-                    <TableCell>{guest.vip ? <Badge>VIP</Badge> : ""}</TableCell>
+                    <TableCell>
+                      {guest.vip ? (
+                        <div className="flex flex-col items-center justify-center gap-1">
+                          <Badge>會員</Badge>
+                          <Label>{formatCurrency(guest.vipDepositMoney)}</Label>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        variant="outline"
+                        className="items-baseline gap-1.5"
+                      >
+                        洗髮
+                        <span className="font-medium text-primary">12</span>
+                      </Badge>
+                    </TableCell>
                     <TableCell>
                       <div className="overflow-hidden text-sm">
                         {guest.description}
