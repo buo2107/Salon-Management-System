@@ -5,9 +5,7 @@ function GuestTableOperations() {
   return (
     <>
       <div className="flex gap-3">
-        {/* TODO Maybe just need one SearchInput for both of these */}
-        <SearchInput field="name" placeholder="姓名" />
-        <SearchInput field="phone_number" placeholder="電話號碼" />
+        <SearchInput placeholder="姓名 or 電話號碼" />
       </div>
 
       <AddGuest />

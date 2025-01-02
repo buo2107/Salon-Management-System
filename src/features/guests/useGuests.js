@@ -7,19 +7,30 @@ export function useGuests() {
   const [searchParams] = useSearchParams();
   const queryClient = useQueryClient();
 
-  // SEARCH - TODO figure out the search value is number or string, if it is number, search for phone number; otherwise, search for guest name
-  const filterField = searchParams.get("name")
-    ? "name"
-    : searchParams.get("phone_number")
-      ? "phone_number"
-      : null;
+  // SEARCH
+  const searchValue = searchParams.get("search") || "all";
+  const searchField = searchParams.get("search")
+    ? isNaN(searchParams.get("search"))
+      ? "name"
+      : "phone_number"
+    : null;
 
-  const filterValue = searchParams.get(filterField) || "all";
-
-  const filter =
-    !filterValue || filterValue === "all"
+  const search =
+    !searchValue || searchValue === "all"
       ? null
-      : { field: filterField, value: filterValue };
+      : { field: searchField, value: searchValue };
+  // const filterField = searchParams.get("name")
+  //   ? "name"
+  //   : searchParams.get("phone_number")
+  //     ? "phone_number"
+  //     : null;
+
+  // const filterValue = searchParams.get(filterField) || "all";
+
+  // const filter =
+  //   !filterValue || filterValue === "all"
+  //     ? null
+  //     : { field: filterField, value: filterValue };
 
   // PAGINATION
   const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
@@ -30,8 +41,8 @@ export function useGuests() {
     data: { data: guests, count } = {},
     error,
   } = useQuery({
-    queryKey: ["guests", filter, page],
-    queryFn: () => getGuests({ filter, page }),
+    queryKey: ["guests", search, page],
+    queryFn: () => getGuests({ search, page }),
   });
 
   // PRE-FETCHING
@@ -39,14 +50,14 @@ export function useGuests() {
 
   if (page < pageCount)
     queryClient.prefetchQuery({
-      queryKey: ["guests", filter, page + 1],
-      queryFn: () => getGuests({ filter, page: page + 1 }),
+      queryKey: ["guests", search, page + 1],
+      queryFn: () => getGuests({ search, page: page + 1 }),
     });
 
   if (page > 1)
     queryClient.prefetchQuery({
-      queryKey: ["guests", filter, page - 1],
-      queryFn: () => getGuests({ filter, page: page - 1 }),
+      queryKey: ["guests", search, page - 1],
+      queryFn: () => getGuests({ search, page: page - 1 }),
     });
 
   return { isLoading, guests, count, error };

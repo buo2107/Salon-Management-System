@@ -2,9 +2,8 @@ import { useSearchParams } from "react-router-dom";
 import { AtSign } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
-function SearchInput({ field, placeholder }) {
+function SearchInput({ placeholder }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  // TODO searchParams.set("search", `${field}-${e.target.value}`)
 
   function handleCompositionStart(e) {
     e.target.composing = true;
@@ -14,20 +13,20 @@ function SearchInput({ field, placeholder }) {
     if (!e.target.composing) return;
 
     e.target.composing = false;
-    searchParams.set(field, e.target.value);
+    searchParams.set("search", e.target.value);
     setSearchParams(searchParams);
   }
 
   function handleChange(e) {
     if (e.target.composing) return;
 
-    searchParams.set(field, e.target.value);
+    searchParams.set("search", e.target.value);
     setSearchParams(searchParams);
   }
 
   function handleBlur(e) {
     e.target.value = "";
-    searchParams.set(field, "");
+    searchParams.set("search", "");
     setSearchParams(searchParams);
   }
 
