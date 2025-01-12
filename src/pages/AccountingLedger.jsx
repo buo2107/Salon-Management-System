@@ -1,7 +1,7 @@
-import { DataTableDemo } from "@/ui/Test";
+import Component from "@/ui/Test";
 
 function AccountingLedger() {
-  return <DataTableDemo />;
+  return <Component />;
 }
 
 export default AccountingLedger;

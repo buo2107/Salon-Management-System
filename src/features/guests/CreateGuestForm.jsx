@@ -17,6 +17,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useCreateGuest } from "./useCreateGuest";
 import { useUpdateGuest } from "./useUpdateGuest";
+import InputStartInlineAddOn from "@/ui/InputStartInlineAddOn";
+import InputEndInlineAddOn from "@/ui/InputEndInlineAddOn";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -30,6 +32,13 @@ const formSchema = z.object({
     .regex(/^0(9|2)\d{8}$/, "非標準電話號碼，請確認輸入是否正確"),
   gender: z.string(),
   vip: z.boolean().optional(),
+  vipDepositMoney: z.number().min(0),
+  hairWashCard: z.boolean().optional(),
+  hairWashPoints: z.number().min(0),
+  hairProtectCard: z.boolean().optional(),
+  hairProtectPoints: z.number().min(0),
+  scalpCard: z.boolean().optional(),
+  scalpPoints: z.number().min(0),
   description: z.string().optional(),
 });
 
@@ -50,18 +59,29 @@ export default function CreateGuestForm({ guestToUpdate = {}, onCloseModal }) {
           name: "",
           phone_number: "",
           vip: false,
+          hairWashCard: false,
+          hairProtectCard: false,
+          scalpCard: false,
+          hairWashPoints: 0,
+          hairProtectPoints: 0,
+          scalpPoints: 0,
           description: "",
           gender: "女",
+          vipDepositMoney: 0,
         },
   });
 
-  function onSubmit(data) {
-    if (isUpdateSession) updateGuest({ updateData: { ...data }, id: guestId });
-    else createGuest(data);
+  function convertDataIntoDBFormat() {
+    // loyaltyCard = [ {name:'洗髮', points: 6}, {name: '護髮', points: 12}, {name: '頭皮', points: 12} ]
+  }
 
-    form.reset();
-    onCloseModal();
-    // console.log(data);
+  function onSubmit(data) {
+    // if (isUpdateSession) updateGuest({ updateData: { ...data }, id: guestId });
+    // else createGuest(data);
+
+    // form.reset();
+    // onCloseModal();
+    console.log(data);
   }
 
   return (
@@ -142,25 +162,204 @@ export default function CreateGuestForm({ guestToUpdate = {}, onCloseModal }) {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="vip"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-              <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <div className="space-y-1 leading-none">
-                <FormLabel>VIP</FormLabel>
-                <FormDescription>確認此客戶為本店VIP</FormDescription>
-                <FormMessage />
-              </div>
-            </FormItem>
-          )}
-        />
+        {/* TODO isUpdateSession時不會出現會員卡及集點卡相關欄位(關乎客戶權益，不應輕易讓使用者修改相關金額)，但創建新客戶時可一同登入會員及集點卡資料(同時建立新的交易資料) */}
+        {!isUpdateSession && (
+          <div className="flex h-[40px] items-center gap-2">
+            <FormField
+              control={form.control}
+              name="vip"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center gap-2 space-y-0">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={(event) => {
+                        field.onChange(event);
+                        event
+                          ? form.setValue("vipDepositMoney", 10000)
+                          : form.setValue("vipDepositMoney", 0);
+                      }}
+                    />
+                  </FormControl>
+                  <FormLabel>會員卡</FormLabel>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="vipDepositMoney"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="relative">
+                      <Input
+                        disabled={form.getValues("vip") === false}
+                        className="peer pe-12 ps-10"
+                        type="number"
+                        min="0"
+                        {...field}
+                        onChange={(event) =>
+                          field.onChange(+event.target.value)
+                        }
+                      />
+                      <InputStartInlineAddOn>NT$</InputStartInlineAddOn>
+                      <InputEndInlineAddOn>TWD</InputEndInlineAddOn>
+                    </div>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+        )}
+
+        {/* PONIT CARDS */}
+        {!isUpdateSession && (
+          <div className="grid grid-cols-2 grid-rows-3 gap-3">
+            {/* 洗髮卡 */}
+            <div className="row-start-1 flex h-[40px] flex-row items-center gap-1">
+              <FormField
+                control={form.control}
+                name="hairWashCard"
+                render={({ field }) => (
+                  <FormItem className="flex w-[150px] flex-row items-center gap-2 space-y-0">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={(event) => {
+                          field.onChange(event);
+                          event
+                            ? form.setValue("hairWashPoints", 1)
+                            : form.setValue("hairWashPoints", 0);
+                        }}
+                      />
+                    </FormControl>
+                    <FormLabel>洗髮卡</FormLabel>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="hairWashPoints"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          disabled={form.getValues("hairWashCard") === false}
+                          className="peer pe-12 ps-10"
+                          type="number"
+                          min={`${form.getValues("hairWashCard") === false ? "0" : "1"}`}
+                          {...field}
+                          onChange={(event) =>
+                            field.onChange(+event.target.value)
+                          }
+                        />
+                        <InputEndInlineAddOn>張</InputEndInlineAddOn>
+                      </div>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            {/* 護髮卡 */}
+            <div className="row-start-2 flex h-[40px] flex-row items-center gap-1">
+              <FormField
+                control={form.control}
+                name="hairProtectCard"
+                render={({ field }) => (
+                  <FormItem className="flex w-[150px] flex-row items-center gap-2 space-y-0">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={(event) => {
+                          field.onChange(event);
+                          event
+                            ? form.setValue("hairProtectPoints", 1)
+                            : form.setValue("hairProtectPoints", 0);
+                        }}
+                      />
+                    </FormControl>
+                    <FormLabel>護髮卡</FormLabel>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="hairProtectPoints"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          disabled={form.getValues("hairProtectCard") === false}
+                          className="peer pe-12 ps-10"
+                          type="number"
+                          min={`${form.getValues("hairProtectCard") === false ? "0" : "1"}`}
+                          {...field}
+                          onChange={(event) =>
+                            field.onChange(+event.target.value)
+                          }
+                        />
+                        <InputEndInlineAddOn>張</InputEndInlineAddOn>
+                      </div>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            {/* 頭皮卡 */}
+            <div className="row-start-3 flex h-[40px] flex-row items-center gap-1">
+              <FormField
+                control={form.control}
+                name="scalpCard"
+                render={({ field }) => (
+                  <FormItem className="flex w-[150px] flex-row items-center gap-2 space-y-0">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={(event) => {
+                          field.onChange(event);
+                          event
+                            ? form.setValue("scalpPoints", 1)
+                            : form.setValue("scalpPoints", 0);
+                        }}
+                      />
+                    </FormControl>
+                    <FormLabel>護髮卡</FormLabel>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="scalpPoints"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          disabled={form.getValues("scalpCard") === false}
+                          className="peer pe-12 ps-10"
+                          type="number"
+                          min={`${form.getValues("scalpCard") === false ? "0" : "1"}`}
+                          {...field}
+                          onChange={(event) =>
+                            field.onChange(+event.target.value)
+                          }
+                        />
+                        <InputEndInlineAddOn>張</InputEndInlineAddOn>
+                      </div>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+        )}
 
         <FormField
           control={form.control}

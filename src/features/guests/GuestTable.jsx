@@ -36,7 +36,7 @@ function GuestTable() {
                 <TableHead>
                   <div className="flex items-center justify-center space-x-2">
                     <Checkbox id="vip" />
-                    <label htmlFor="vip">會員</label>
+                    <label htmlFor="vip">會員卡</label>
                   </div>
                 </TableHead>
                 <TableHead>點數卡</TableHead>
