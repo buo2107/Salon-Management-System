@@ -7,6 +7,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+// date, type, typeDetails, discount, totalPrice, cart, guestId, description
 const items = [
   {
     id: "1",
@@ -50,7 +51,7 @@ const items = [
   },
 ];
 
-export default function Component() {
+function allLedgerData() {
   return (
     <div>
       <Table>
@@ -84,3 +85,5 @@ export default function Component() {
     </div>
   );
 }
+
+export default allLedgerData;

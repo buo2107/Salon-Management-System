@@ -19,6 +19,7 @@ import { useCreateGuest } from "./useCreateGuest";
 import { useUpdateGuest } from "./useUpdateGuest";
 import InputStartInlineAddOn from "@/ui/InputStartInlineAddOn";
 import InputEndInlineAddOn from "@/ui/InputEndInlineAddOn";
+import { POINTS_PER_CARD } from "@/utils/constants";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -32,13 +33,13 @@ const formSchema = z.object({
     .regex(/^0(9|2)\d{8}$/, "非標準電話號碼，請確認輸入是否正確"),
   gender: z.string(),
   vip: z.boolean().optional(),
-  vipDepositMoney: z.number().min(0),
-  hairWashCard: z.boolean().optional(),
-  hairWashPoints: z.number().min(0),
-  hairProtectCard: z.boolean().optional(),
-  hairProtectPoints: z.number().min(0),
-  scalpCard: z.boolean().optional(),
-  scalpPoints: z.number().min(0),
+  vipDepositMoney: z.number().min(0).optional(),
+  haveHairWashCard: z.boolean().optional(),
+  hairWashPoints: z.number().min(0).optional(),
+  haveHairProtectCard: z.boolean().optional(),
+  hairProtectPoints: z.number().min(0).optional(),
+  haveScalpCard: z.boolean().optional(),
+  scalpPoints: z.number().min(0).optional(),
   description: z.string().optional(),
 });
 
@@ -49,7 +50,7 @@ export default function CreateGuestForm({ guestToUpdate = {}, onCloseModal }) {
   // Confirm whether is in UPDATE situation (guestId has existed)
   const { id: guestId, ...updateValues } = guestToUpdate;
   const isUpdateSession = Boolean(guestId);
-  // console.log(updateValues);
+  // console.log(isUpdateSession, updateValues);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -59,9 +60,9 @@ export default function CreateGuestForm({ guestToUpdate = {}, onCloseModal }) {
           name: "",
           phone_number: "",
           vip: false,
-          hairWashCard: false,
-          hairProtectCard: false,
-          scalpCard: false,
+          haveHairWashCard: false,
+          haveHairProtectCard: false,
+          haveScalpCard: false,
           hairWashPoints: 0,
           hairProtectPoints: 0,
           scalpPoints: 0,
@@ -71,17 +72,50 @@ export default function CreateGuestForm({ guestToUpdate = {}, onCloseModal }) {
         },
   });
 
-  function convertDataIntoDBFormat() {
-    // loyaltyCard = [ {name:'洗髮', points: 6}, {name: '護髮', points: 12}, {name: '頭皮', points: 12} ]
+  function convertDataIntoDBFormat(data) {
+    const loyaltyCard = [];
+
+    if (data.haveHairWashCard) {
+      loyaltyCard.push({
+        name: "洗髮",
+        points: data.hairWashPoints * POINTS_PER_CARD,
+      });
+    }
+    if (data.haveHairProtectCard) {
+      loyaltyCard.push({
+        name: "護髮",
+        points: data.hairProtectPoints * POINTS_PER_CARD,
+      });
+    }
+    if (data.haveScalpCard) {
+      loyaltyCard.push({
+        name: "頭皮",
+        points: data.scalpPoints * POINTS_PER_CARD,
+      });
+    }
+
+    return {
+      name: data.name,
+      phone_number: data.phone_number,
+      gender: data.gender,
+      vip: data.vip,
+      vipDepositMoney: data.vipDepositMoney,
+      description: data.description,
+      loyaltyCard: loyaltyCard,
+    };
   }
 
   function onSubmit(data) {
-    // if (isUpdateSession) updateGuest({ updateData: { ...data }, id: guestId });
-    // else createGuest(data);
+    console.log(isUpdateSession);
+    if (isUpdateSession) updateGuest({ updateData: { ...data }, id: guestId });
+    else {
+      const newGuest = convertDataIntoDBFormat(data);
+      createGuest(newGuest);
+      // console.log(newGuest);
+    }
 
-    // form.reset();
-    // onCloseModal();
-    console.log(data);
+    form.reset();
+    onCloseModal();
   }
 
   return (
@@ -220,7 +254,7 @@ export default function CreateGuestForm({ guestToUpdate = {}, onCloseModal }) {
             <div className="row-start-1 flex h-[40px] flex-row items-center gap-1">
               <FormField
                 control={form.control}
-                name="hairWashCard"
+                name="haveHairWashCard"
                 render={({ field }) => (
                   <FormItem className="flex w-[150px] flex-row items-center gap-2 space-y-0">
                     <FormControl>
@@ -246,10 +280,12 @@ export default function CreateGuestForm({ guestToUpdate = {}, onCloseModal }) {
                     <FormControl>
                       <div className="relative">
                         <Input
-                          disabled={form.getValues("hairWashCard") === false}
+                          disabled={
+                            form.getValues("haveHairWashCard") === false
+                          }
                           className="peer pe-12 ps-10"
                           type="number"
-                          min={`${form.getValues("hairWashCard") === false ? "0" : "1"}`}
+                          min={`${form.getValues("haveHairWashCard") === false ? "0" : "1"}`}
                           {...field}
                           onChange={(event) =>
                             field.onChange(+event.target.value)
@@ -267,7 +303,7 @@ export default function CreateGuestForm({ guestToUpdate = {}, onCloseModal }) {
             <div className="row-start-2 flex h-[40px] flex-row items-center gap-1">
               <FormField
                 control={form.control}
-                name="hairProtectCard"
+                name="haveHairProtectCard"
                 render={({ field }) => (
                   <FormItem className="flex w-[150px] flex-row items-center gap-2 space-y-0">
                     <FormControl>
@@ -294,10 +330,12 @@ export default function CreateGuestForm({ guestToUpdate = {}, onCloseModal }) {
                     <FormControl>
                       <div className="relative">
                         <Input
-                          disabled={form.getValues("hairProtectCard") === false}
+                          disabled={
+                            form.getValues("haveHairProtectCard") === false
+                          }
                           className="peer pe-12 ps-10"
                           type="number"
-                          min={`${form.getValues("hairProtectCard") === false ? "0" : "1"}`}
+                          min={`${form.getValues("haveHairProtectCard") === false ? "0" : "1"}`}
                           {...field}
                           onChange={(event) =>
                             field.onChange(+event.target.value)
@@ -315,7 +353,7 @@ export default function CreateGuestForm({ guestToUpdate = {}, onCloseModal }) {
             <div className="row-start-3 flex h-[40px] flex-row items-center gap-1">
               <FormField
                 control={form.control}
-                name="scalpCard"
+                name="haveScalpCard"
                 render={({ field }) => (
                   <FormItem className="flex w-[150px] flex-row items-center gap-2 space-y-0">
                     <FormControl>
@@ -329,7 +367,7 @@ export default function CreateGuestForm({ guestToUpdate = {}, onCloseModal }) {
                         }}
                       />
                     </FormControl>
-                    <FormLabel>護髮卡</FormLabel>
+                    <FormLabel>頭皮卡</FormLabel>
                   </FormItem>
                 )}
               />
@@ -342,10 +380,10 @@ export default function CreateGuestForm({ guestToUpdate = {}, onCloseModal }) {
                     <FormControl>
                       <div className="relative">
                         <Input
-                          disabled={form.getValues("scalpCard") === false}
+                          disabled={form.getValues("haveScalpCard") === false}
                           className="peer pe-12 ps-10"
                           type="number"
-                          min={`${form.getValues("scalpCard") === false ? "0" : "1"}`}
+                          min={`${form.getValues("haveScalpCard") === false ? "0" : "1"}`}
                           {...field}
                           onChange={(event) =>
                             field.onChange(+event.target.value)

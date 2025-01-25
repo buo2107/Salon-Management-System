@@ -2,7 +2,10 @@ import { PAGE_SIZE } from "@/utils/constants";
 import supabase from "./supabase";
 
 export async function getGuests({ search, page }) {
-  let query = supabase.from("guests").select("*", { count: "exact" });
+  let query = supabase
+    .from("guests")
+    .select("*", { count: "exact" })
+    .order("created_at", { ascending: false });
 
   // SEARCH
   if (search) query = query.like(search.field, `%${search.value}%`);

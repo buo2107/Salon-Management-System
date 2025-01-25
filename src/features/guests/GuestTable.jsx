@@ -15,6 +15,7 @@ import GuestTableOperations from "./GuestTableOperations";
 import { useGuests } from "./useGuests";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { CircleOff } from "lucide-react";
 
 function GuestTable() {
   const { isLoading, guests, count } = useGuests();
@@ -78,13 +79,31 @@ function GuestTable() {
                       )}
                     </TableCell>
                     <TableCell>
-                      <Badge
-                        variant="outline"
-                        className="items-baseline gap-1.5"
-                      >
-                        洗髮
-                        <span className="font-medium text-primary">12</span>
-                      </Badge>
+                      <div className="flex flex-col items-center justify-center gap-1">
+                        {guest.loyaltyCard?.length !== 0 ? (
+                          guest.loyaltyCard.map((card) => (
+                            <Badge
+                              key={card.name}
+                              variant="outline"
+                              className="w-[64px] items-baseline gap-1.5"
+                            >
+                              {card.name}
+                              <span className="font-medium text-primary">
+                                {card.points}
+                              </span>
+                            </Badge>
+                          ))
+                        ) : (
+                          <Badge className="gap-1" variant="outline">
+                            <CircleOff
+                              className="-ms-0.5 opacity-60"
+                              size={12}
+                              strokeWidth={2}
+                              aria-hidden="true"
+                            />
+                          </Badge>
+                        )}
+                      </div>
                     </TableCell>
                     <TableCell>
                       <div className="overflow-hidden text-sm">
