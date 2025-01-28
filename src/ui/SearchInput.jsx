@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import { AtSign } from "lucide-react";
+import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 function SearchInput({ placeholder }) {
@@ -36,7 +36,7 @@ function SearchInput({ placeholder }) {
           onChange={handleChange}
         />
         <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/80 peer-disabled:opacity-50">
-          <AtSign size={16} strokeWidth={2} aria-hidden="true" />
+          <Search size={16} strokeWidth={2} aria-hidden="true" />
         </div>
       </div>
     </div>

@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/select";
 import { useSettings } from "@/features/settings/useSettings";
 import { useSearchParams } from "react-router-dom";
+
+// TODO: 不能改成通用ui的話，放products folder比較適合
 function Filter() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { settings, isLoading } = useSettings();

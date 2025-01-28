@@ -7,7 +7,7 @@ function AccountingLedger() {
     <>
       <Heading>收支明細</Heading>
       <div className="flex flex-row items-start gap-3">
-        <AddLedger />
+        {/* <AddLedger /> */}
       </div>
       <LedgerTable />
     </>
