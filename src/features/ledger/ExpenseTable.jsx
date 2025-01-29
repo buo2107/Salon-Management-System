@@ -14,10 +14,12 @@ import { GripHorizontal } from "lucide-react";
 import { formatCurrency } from "@/utils/helpers";
 import { Badge } from "@/components/ui/badge";
 import { useExpenseItem } from "./useExpenseItem";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 function ExpenseTable() {
   const { expenses, isLoading } = useExpenses();
   const { expenseItems, isLoading: isLoading2 } = useExpenseItem();
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isLoading || isLoading2) return <Spinner />;
 
@@ -39,7 +41,7 @@ function ExpenseTable() {
           <TableRow className="*:border-border hover:bg-transparent [&>:not(:last-child)]:border-r">
             <TableHead>日期</TableHead>
             <TableHead>分類</TableHead>
-            <TableHead>說明</TableHead>
+            {isDesktop && <TableHead>說明</TableHead>}
             <TableHead className="text-right">金額</TableHead>
             <TableHead></TableHead>
           </TableRow>
@@ -50,22 +52,29 @@ function ExpenseTable() {
               key={expense.id}
               className="*:border-border hover:bg-transparent [&>:not(:last-child)]:border-r"
             >
-              <TableCell className="text-base font-medium">
-                {expense.date}
-              </TableCell>
+              <TableCell className="font-medium">{expense.date}</TableCell>
               <TableCell>
-                <Badge variant="secondary">{expense.category}</Badge>
+                <Badge variant="secondary" className="w-[70px]">
+                  {expense.category}
+                </Badge>
               </TableCell>
-              <TableCell>
-                {expense.item.length === 0
-                  ? expense.description
-                  : expense.item.map((item) => (
+              {isDesktop && (
+                <TableCell>
+                  {expense.item.length === 0 ? (
+                    <p className="text-sm text-muted-foreground">
+                      {expense.description}
+                    </p>
+                  ) : (
+                    expense.item.map((item) => (
                       <p
                         key={item.id}
+                        className="text-sm text-muted-foreground"
                       >{`${item.products.name} x ${item.quantity}`}</p>
-                    ))}
-              </TableCell>
-              <TableCell className="text-right text-base font-medium">
+                    ))
+                  )}
+                </TableCell>
+              )}
+              <TableCell className="text-right font-medium">
                 {formatCurrency(expense.amount)}
               </TableCell>
               <TableCell className="text-center">
