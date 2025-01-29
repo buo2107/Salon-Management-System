@@ -21,12 +21,17 @@ function ExpenseTable() {
 
   if (isLoading || isLoading2) return <Spinner />;
 
-  // console.log(expenseItems[0].products.name);
-  const products = expenseItems.map((item) => {
-    return { name: item.products.name, quantity: item.quantity };
+  // Combine the expense and expenseItem data
+  const fullExpenses = expenses.map((expense) => {
+    const matchingItem = expenseItems.filter(
+      (item) => item.expenseId === expense.id,
+    );
+    if (matchingItem) {
+      expense.item = matchingItem;
+    }
+    return expense;
   });
 
-  console.log(expenses, products);
   return (
     <div>
       <Table>
@@ -40,25 +45,28 @@ function ExpenseTable() {
           </TableRow>
         </TableHeader>
         <TableBody className="[&_td:first-child]:rounded-l-lg [&_td:last-child]:rounded-r-lg">
-          {expenses.map((item) => (
+          {fullExpenses.map((expense) => (
             <TableRow
-              key={item.id}
+              key={expense.id}
               className="*:border-border hover:bg-transparent [&>:not(:last-child)]:border-r"
             >
               <TableCell className="text-base font-medium">
-                {item.date}
+                {expense.date}
               </TableCell>
               <TableCell>
-                <Badge variant="secondary">{item.category}</Badge>
+                <Badge variant="secondary">{expense.category}</Badge>
               </TableCell>
               <TableCell>
-                {item.description ||
-                  products.map((item) => (
-                    <p key={item.name}>{`${item.name} x ${item.quantity}`}</p>
-                  ))}
+                {expense.item.length === 0
+                  ? expense.description
+                  : expense.item.map((item) => (
+                      <p
+                        key={item.id}
+                      >{`${item.products.name} x ${item.quantity}`}</p>
+                    ))}
               </TableCell>
               <TableCell className="text-right text-base font-medium">
-                {formatCurrency(item.amount)}
+                {formatCurrency(expense.amount)}
               </TableCell>
               <TableCell className="text-center">
                 <Button size="icon" variant="ghost">

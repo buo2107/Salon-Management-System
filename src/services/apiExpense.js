@@ -11,11 +11,10 @@ export async function getExpenses() {
   return data;
 }
 
-export async function getExpenseItem(id) {
+export async function getExpenseItem() {
   let { data, error } = await supabase
     .from("expenseItem")
-    .select("*, products(name)")
-    .eq("expenseId", id);
+    .select("*, products(name)");
 
   if (error) {
     console.error(error);

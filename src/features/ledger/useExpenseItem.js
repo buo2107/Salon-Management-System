@@ -9,7 +9,7 @@ export function useExpenseItem() {
     error,
   } = useQuery({
     queryKey: ["expenseItem"],
-    queryFn: () => getExpenseItem(4),
+    queryFn: () => getExpenseItem(),
     retry: false,
   });
 
