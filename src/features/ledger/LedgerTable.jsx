@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ExpenseTable from "./ExpenseTable";
 import IncomeTable from "./IncomeTable";
-import AddLedger from "./AddLedger";
+import AddExpense from "./AddExpense";
 
 function LedgerTable() {
   return (
@@ -42,7 +42,7 @@ function LedgerTable() {
             <div>Search</div>
             <div>FILTER</div>
           </div>
-          <AddLedger />
+          <AddExpense />
         </div>
         <ExpenseTable />
       </TabsContent>

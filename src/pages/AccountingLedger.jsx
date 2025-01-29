@@ -1,4 +1,4 @@
-import AddLedger from "@/features/ledger/AddLedger";
+import AddLedger from "@/features/ledger/AddExpense";
 import LedgerTable from "@/features/ledger/LedgerTable";
 import Heading from "@/ui/Heading";
 

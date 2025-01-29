@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
-function AddLedger() {
+function AddExpense() {
+  // TODO : reference to shadcn ui Drawer/response dialog
   return (
     <Button variant="outline" className="self-end">
       <Plus
@@ -15,4 +16,4 @@ function AddLedger() {
   );
 }
 
-export default AddLedger;
+export default AddExpense;
