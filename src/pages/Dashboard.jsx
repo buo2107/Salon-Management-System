@@ -1,8 +1,9 @@
+import CreateExpenseForm from "@/features/ledger/CreateExpenseForm";
+
 function Dashboard() {
   return (
     <div>
-      Dashboard
-      {/* <Button>ddd</Button> */}
+      <CreateExpenseForm />
     </div>
   );
 }
