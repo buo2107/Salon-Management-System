@@ -196,7 +196,7 @@ export default function CreateGuestForm({ guestToUpdate = {}, onCloseModal }) {
           )}
         />
 
-        {/* TODO isUpdateSession時不會出現會員卡及集點卡相關欄位(關乎客戶權益，不應輕易讓使用者修改相關金額)，但創建新客戶時可一同登入會員及集點卡資料(同時建立新的交易資料) */}
+        {/* TODO -FINISHED isUpdateSession時不會出現會員卡及集點卡相關欄位(關乎客戶權益，不應輕易讓使用者修改相關金額)，但創建新客戶時可一同登入會員及集點卡資料(同時建立新的交易資料) */}
         {!isUpdateSession && (
           <div className="flex h-[40px] items-center gap-2">
             <FormField
@@ -416,9 +416,21 @@ export default function CreateGuestForm({ guestToUpdate = {}, onCloseModal }) {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isCreating || isUpdating}>
-          {isUpdateSession ? "更新客戶資料" : "新增客戶資料"}
-        </Button>
+
+        <div className="flex w-full justify-between">
+          <Button
+            type="reset"
+            variant="outline"
+            disabled={isCreating || isUpdating}
+            onClick={onCloseModal}
+          >
+            取消
+          </Button>
+
+          <Button type="submit" disabled={isCreating || isUpdating}>
+            {isUpdateSession ? "更新客戶資料" : "新增客戶資料"}
+          </Button>
+        </div>
       </form>
     </Form>
   );
