@@ -30,6 +30,17 @@ export async function getProducts({ filter, sortBy, page }) {
   return { data, count };
 }
 
+export async function getProductsList() {
+  const { data, error } = await supabase.from("products").select("*");
+
+  if (error) {
+    console.error(error);
+    throw new Error("Product list data could not be loaded");
+  }
+
+  return data;
+}
+
 export async function createProduct(newProduct) {
   // let imageName;
   // let imagePath;
