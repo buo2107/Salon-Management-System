@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -21,12 +20,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Calendar as CalendarIcon,
-  CircleX,
-  Delete,
-  DeleteIcon,
-} from "lucide-react";
+import { Calendar as CalendarIcon, CircleX } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useRef, useState } from "react";
 import { PopoverClose } from "@radix-ui/react-popover";
@@ -48,6 +42,7 @@ const formSchema = z.object({
   date: z.coerce.date(),
   amount: z.number().min(0),
   description: z.string().optional(),
+  totalCost: z.number().min(0),
 });
 
 export default function CreateExpenseForm() {
@@ -55,12 +50,17 @@ export default function CreateExpenseForm() {
   const { settings, isLoadingSettings } = useSettings();
   const { products, isLoadingProducts } = useProductsList();
 
-  const [blocks, setBlocks] = useState([{ productName: "", quantity: 0 }]);
+  const [blocks, setBlocks] = useState([
+    { productName: "", quantity: 0, unitPrice: 0 },
+  ]);
 
   console.log(blocks);
 
   const addBlock = () => {
-    setBlocks(() => [...blocks, { productName: "", quantity: 0 }]);
+    setBlocks(() => [
+      ...blocks,
+      { productName: "", quantity: 0, unitPrice: 0 },
+    ]);
   };
 
   const removeBlock = (index) => {
@@ -72,6 +72,7 @@ export default function CreateExpenseForm() {
   const handleProductNameChange = (index, value) => {
     const newBlocks = [...blocks];
     newBlocks[index].productName = value;
+    newBlocks[index].unitPrice = products?.find((p) => p.name === value)?.cost;
     setBlocks(newBlocks);
   };
   const handleQuantityChange = (index, value) => {
@@ -183,43 +184,45 @@ export default function CreateExpenseForm() {
           )}
         />
 
-        <div className="min-h-[180px]">
+        <div className="min-h-[250px]">
           {/* If CATEGORY TYPE is "營業支出" */}
           {form.getValues("category") === "營業支出" && (
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-8">
               {/* AMOUNT */}
-              <FormField
-                control={form.control}
-                name="amount"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      金額<span className="text-destructive">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <div className="relative">
-                        <Input
-                          className="peer pe-12 ps-10"
-                          placeholder="0"
-                          type="number"
-                          {...field}
-                          onChange={(event) =>
-                            field.onChange(+event.target.value)
-                          }
-                        />
-                        <span className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-sm text-muted-foreground peer-disabled:opacity-50">
-                          NT$
-                        </span>
-                        <span className="pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-sm text-muted-foreground peer-disabled:opacity-50">
-                          TWD
-                        </span>
-                      </div>
-                    </FormControl>
+              <div className="grid grid-cols-2">
+                <FormField
+                  control={form.control}
+                  name="amount"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        金額<span className="text-destructive">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Input
+                            className="peer pe-12 ps-10"
+                            placeholder="0"
+                            type="number"
+                            {...field}
+                            onChange={(event) =>
+                              field.onChange(+event.target.value)
+                            }
+                          />
+                          <span className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-sm text-muted-foreground peer-disabled:opacity-50">
+                            NT$
+                          </span>
+                          <span className="pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-sm text-muted-foreground peer-disabled:opacity-50">
+                            TWD
+                          </span>
+                        </div>
+                      </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
               {/* DESCRIPTION */}
               <FormField
                 control={form.control}
@@ -245,7 +248,7 @@ export default function CreateExpenseForm() {
           {form.getValues("category") === "商品進貨" && (
             <div className="space-y-4">
               <Label>
-                商品資訊<span className="text-destructive">*</span>
+                進貨數量<span className="text-destructive">*</span>
               </Label>
               {blocks.map((block, index) => (
                 <div key={index} className="grid grid-cols-4 gap-3">
@@ -299,7 +302,10 @@ export default function CreateExpenseForm() {
                     />
                   </div>
 
-                  <div className={`${index === 0 ? "hidden" : ""}`}>
+                  {/* 只能從最後一項開始刪除商品(BUG-若從中間項刪除，實際數據正確但UI顯示與實際數據有出入) */}
+                  <div
+                    className={`${index === 0 || index !== blocks.length - 1 ? "hidden" : ""}`}
+                  >
                     <Button
                       type="button"
                       variant="ghost"
@@ -312,8 +318,9 @@ export default function CreateExpenseForm() {
                 </div>
               ))}
 
-              <button
+              <Button
                 type="button"
+                variant="link"
                 disabled={
                   blocks[blocks.length - 1].productName === "" ||
                   blocks[blocks.length - 1].quantity === 0
@@ -321,8 +328,54 @@ export default function CreateExpenseForm() {
                 onClick={addBlock}
                 className="text-sm underline hover:no-underline"
               >
-                + Add another
-              </button>
+                +新增商品
+              </Button>
+
+              {/* 總價 */}
+              <div className="mb-2 grid grid-cols-2">
+                <FormField
+                  control={form.control}
+                  name="totalCost"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        總價<span className="text-destructive">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          {/* let input field show the total cost */}
+
+                          <Input
+                            className="peer pe-12 ps-10 read-only:bg-muted"
+                            placeholder={blocks.reduce(
+                              (acc, cur) => acc + cur.quantity * cur.unitPrice,
+                              0,
+                            )}
+                            type="number"
+                            {...field}
+                            value={blocks.reduce(
+                              (acc, cur) => acc + cur.quantity * cur.unitPrice,
+                              0,
+                            )}
+                            readOnly
+                            // onChange={(event) =>
+                            //   field.onChange(+event.target.value)
+                            // }
+                          />
+                          <span className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-sm text-muted-foreground peer-disabled:opacity-50">
+                            NT$
+                          </span>
+                          <span className="pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-sm text-muted-foreground peer-disabled:opacity-50">
+                            TWD
+                          </span>
+                        </div>
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
             </div>
           )}
         </div>
