@@ -21,7 +21,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { Calendar as CalendarIcon } from "lucide-react";
+import {
+  Calendar as CalendarIcon,
+  CircleX,
+  Delete,
+  DeleteIcon,
+} from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useRef, useState } from "react";
 import { PopoverClose } from "@radix-ui/react-popover";
@@ -44,12 +49,36 @@ const formSchema = z.object({
   amount: z.number().min(0),
   description: z.string().optional(),
 });
+
 export default function CreateExpenseForm() {
   const popOverRef = useRef(null);
   const { settings, isLoadingSettings } = useSettings();
   const { products, isLoadingProducts } = useProductsList();
 
-  const [items, setItems] = useState([]);
+  const [blocks, setBlocks] = useState([{ productName: "", quantity: 0 }]);
+
+  console.log(blocks);
+
+  const addBlock = () => {
+    setBlocks(() => [...blocks, { productName: "", quantity: 0 }]);
+  };
+
+  const removeBlock = (index) => {
+    const newBlocks = [...blocks];
+    newBlocks.splice(index, 1);
+    setBlocks(newBlocks);
+  };
+
+  const handleProductNameChange = (index, value) => {
+    const newBlocks = [...blocks];
+    newBlocks[index].productName = value;
+    setBlocks(newBlocks);
+  };
+  const handleQuantityChange = (index, value) => {
+    const newBlocks = [...blocks];
+    newBlocks[index].quantity = value;
+    setBlocks(newBlocks);
+  };
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -113,7 +142,9 @@ export default function CreateExpenseForm() {
           name="date"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>付款日期</FormLabel>
+              <FormLabel>
+                付款日期<span className="text-destructive">*</span>
+              </FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -213,43 +244,81 @@ export default function CreateExpenseForm() {
           {/* If CATEGORY TYPE is "商品進貨" */}
           {form.getValues("category") === "商品進貨" && (
             <div className="space-y-4">
-              <div>
-                {/* LIST OF PRODUCTS [{PRODUCT 1, QUANTITY}, {PRODUCT 2, QUANTITY}...] */}
-                {/* 商品名稱 */}
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="選擇商品" />
-                  </SelectTrigger>
+              <Label>
+                商品資訊<span className="text-destructive">*</span>
+              </Label>
+              {blocks.map((block, index) => (
+                <div key={index} className="grid grid-cols-4 gap-3">
+                  {/* 商品名稱 */}
+                  <div className="col-span-2">
+                    <Select
+                      onValueChange={(value) =>
+                        handleProductNameChange(index, value)
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="選擇商品" />
+                      </SelectTrigger>
 
-                  <SelectContent className="[&_*[role=option]>span]:end-2 [&_*[role=option]>span]:start-auto [&_*[role=option]]:pe-8 [&_*[role=option]]:ps-2">
-                    {isLoadingSettings
-                      ? null
-                      : settings.catagory_list?.map((catagory) => (
-                          <SelectGroup key={catagory}>
-                            <SelectLabel>{catagory}</SelectLabel>
-                            {isLoadingProducts
-                              ? null
-                              : products
-                                  .filter(
-                                    (product) => product.catagory === catagory,
-                                  )
-                                  .map((product) => (
-                                    <SelectItem
-                                      key={product.id}
-                                      value={product.name}
-                                    >
-                                      {product.name}
-                                    </SelectItem>
-                                  ))}
-                          </SelectGroup>
-                        ))}
-                  </SelectContent>
-                </Select>
-                {/* 數量 */}
-              </div>
+                      <SelectContent className="[&_*[role=option]>span]:end-2 [&_*[role=option]>span]:start-auto [&_*[role=option]]:pe-8 [&_*[role=option]]:ps-2">
+                        {isLoadingSettings
+                          ? null
+                          : settings.catagory_list?.map((catagory) => (
+                              <SelectGroup key={catagory}>
+                                <SelectLabel>{catagory}</SelectLabel>
+                                {isLoadingProducts
+                                  ? null
+                                  : products
+                                      .filter(
+                                        (product) =>
+                                          product.catagory === catagory,
+                                      )
+                                      .map((product) => (
+                                        <SelectItem
+                                          key={product.id}
+                                          value={product.name}
+                                        >
+                                          {product.name}
+                                        </SelectItem>
+                                      ))}
+                              </SelectGroup>
+                            ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* 商品數量 */}
+                  <div className="col-span-1">
+                    <Input
+                      type="number"
+                      min={0}
+                      defaultValue={0}
+                      onChange={(e) =>
+                        handleQuantityChange(index, e.target.value)
+                      }
+                    />
+                  </div>
+
+                  <div className={`${index === 0 ? "hidden" : ""}`}>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => removeBlock(index)}
+                    >
+                      <CircleX />
+                    </Button>
+                  </div>
+                </div>
+              ))}
+
               <button
                 type="button"
-                // onClick={addEmail}
+                disabled={
+                  blocks[blocks.length - 1].productName === "" ||
+                  blocks[blocks.length - 1].quantity === 0
+                }
+                onClick={addBlock}
                 className="text-sm underline hover:no-underline"
               >
                 + Add another
