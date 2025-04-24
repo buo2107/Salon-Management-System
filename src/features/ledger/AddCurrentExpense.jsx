@@ -2,10 +2,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import Modal from "@/ui/Modal";
-import CreateExpenseForm from "./CreateExpenseForm";
+import CreateCurrentExpenseForm from "./CreateCurrentExpenseForm";
 
-function AddExpense() {
-  // TODO : reference to shadcn ui Drawer/response dialog
+function AddCurrentExpense() {
   const [open, setOpen] = useState(false);
 
   return (
@@ -18,15 +17,14 @@ function AddExpense() {
             strokeWidth={2}
             aria-hidden="true"
           />
-          支出
+          營業支出
         </Button>
       </Modal.Trigger>
       <Modal.Window>
-        {/* <CreateExpenseForm onCloseModal={() => setOpen(false)} /> */}
-        <CreateExpenseForm />
+        <CreateCurrentExpenseForm onCloseModal={() => setOpen(false)} />
       </Modal.Window>
     </Modal>
   );
 }
 
-export default AddExpense;
+export default AddCurrentExpense;

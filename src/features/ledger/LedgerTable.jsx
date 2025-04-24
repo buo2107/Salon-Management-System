@@ -1,7 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ExpenseTable from "./ExpenseTable";
 import IncomeTable from "./IncomeTable";
-import AddExpense from "./AddExpense";
+import AddCurrentExpense from "./AddCurrentExpense";
+import AddSellingExpense from "./AddSellingExpense";
 
 function LedgerTable() {
   return (
@@ -37,12 +38,15 @@ function LedgerTable() {
         <IncomeTable />
       </TabsContent>
       <TabsContent value="expense-table">
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between pb-3">
           <div className="flex flex-row gap-3">
             <div>Search</div>
             <div>FILTER</div>
           </div>
-          <AddExpense />
+          <div className="flex flex-row gap-3">
+            <AddSellingExpense />
+            <AddCurrentExpense />
+          </div>
         </div>
         <ExpenseTable />
       </TabsContent>

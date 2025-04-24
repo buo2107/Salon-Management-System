@@ -23,3 +23,15 @@ export async function getExpenseItem() {
 
   return data;
 }
+
+export async function createExpense(newExpense) {
+  const { data, error } = await supabase
+    .from("expense")
+    .insert([{ ...newExpense }])
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Expense data could not be created");
+  }
+}
