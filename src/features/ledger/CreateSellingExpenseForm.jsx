@@ -34,6 +34,7 @@ import {
 } from "@/components/ui/select";
 import { useProductsList } from "../products/useProductsList";
 import { useSettings } from "../settings/useSettings";
+import { useCreateExpense } from "./useCreateExpense";
 
 const formSchema = z.object({
   date: z.coerce.date(),
@@ -44,6 +45,7 @@ export default function CreateSellingExpenseForm() {
   const popOverRef = useRef(null);
   const { settings, isLoadingSettings } = useSettings();
   const { products, isLoadingProducts } = useProductsList();
+  const { createExpense, isCreating } = useCreateExpense();
 
   const [blocks, setBlocks] = useState([
     { productName: "", quantity: 0, unitPrice: 0 },
@@ -87,12 +89,31 @@ export default function CreateSellingExpenseForm() {
     },
   });
 
-  function onSubmit(data) {
-    console.log(data);
-    console.log(blocks);
-    const date = data.date.toLocaleString().split("T")[0].split(" ")[0];
+  async function onSubmit(data) {
+    const date = data.date
+      .toLocaleString()
+      .split("T")[0]
+      .split(" ")[0]
+      .split("/")
+      .join("-");
 
-    console.log(date);
+    const newExpense = { ...data, category: "商品進貨", date: date };
+
+    const newExpenseItems = blocks
+      .filter((block) => block.productName !== "" && block.quantity > 0)
+      .map((block) => {
+        const product = products.find((p) => p.name === block.productName);
+        return {
+          productId: product.id,
+          quantity: Number(block.quantity),
+          cost: block.unitPrice,
+          total: block.quantity * block.unitPrice,
+        };
+      });
+
+    createExpense({ newExpense, newExpenseItems });
+
+    // console.log(newExpenseItems);
   }
 
   return (
@@ -198,7 +219,7 @@ export default function CreateSellingExpenseForm() {
                   <Input
                     type="number"
                     min={1}
-                    defaultValue={1}
+                    defaultValue={0}
                     onChange={(e) =>
                       handleQuantityChange(index, e.target.value)
                     }

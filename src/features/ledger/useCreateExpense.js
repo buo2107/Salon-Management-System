@@ -6,10 +6,12 @@ export function useCreateExpense() {
   const queryClient = useQueryClient();
 
   const { mutate: createExpense, isPending: isCreating } = useMutation({
-    mutationFn: createExpenseApi,
+    mutationFn: ({ newExpense, newExpenseItems }) =>
+      createExpenseApi(newExpense, newExpenseItems),
     onSuccess: () => {
       toast.success("已成功新增支出資料");
       queryClient.invalidateQueries({ queryKey: ["expense"] });
+      queryClient.invalidateQueries({ queryKey: ["expenseItem"] });
     },
     onError: (err) => toast.error(err.message),
   });

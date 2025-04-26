@@ -54,7 +54,7 @@ export default function CreateCurrentExpenseForm({ onCloseModal }) {
       .join("-");
 
     const newExpense = { ...data, category: "營業支出", date: date };
-    createExpense(newExpense);
+    createExpense({ newExpense });
 
     form.reset();
     onCloseModal();
