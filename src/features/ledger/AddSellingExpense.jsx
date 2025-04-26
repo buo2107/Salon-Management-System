@@ -21,8 +21,7 @@ function AddSellingExpense() {
         </Button>
       </Modal.Trigger>
       <Modal.Window>
-        {/* <CreateExpenseForm onCloseModal={() => setOpen(false)} /> */}
-        <CreateSellingExpenseForm />
+        <CreateSellingExpenseForm onCloseModal={() => setOpen(false)} />
       </Modal.Window>
     </Modal>
   );

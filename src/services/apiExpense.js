@@ -41,7 +41,6 @@ export async function createExpense(newExpense, newExpenseItems = []) {
 
   // 在newExpenseItems裡加入expenseId
   newExpenseItems?.forEach((item) => (item.expenseId = expenseId));
-  console.log(newExpenseItems);
 
   const { data: expenseItems, error: expenseItemsError } = await supabase
     .from("expenseItem")
@@ -51,5 +50,24 @@ export async function createExpense(newExpense, newExpenseItems = []) {
   if (expenseItemsError) {
     console.error(expenseItemsError);
     throw new Error("Expense data could not be created");
+  }
+}
+
+export async function deleteExpense(id) {
+  const { error: expenseItemsError } = await supabase
+    .from("expenseItem")
+    .delete()
+    .eq("expenseId", id);
+
+  if (expenseItemsError) {
+    console.error(expenseItemsError);
+    throw new Error("Expense items could not be deleted");
+  }
+
+  const { error } = await supabase.from("expense").delete().eq("id", id);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Expense could not be deleted");
   }
 }

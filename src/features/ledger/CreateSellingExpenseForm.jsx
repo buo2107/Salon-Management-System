@@ -41,7 +41,7 @@ const formSchema = z.object({
   amount: z.number().min(1, { message: "金額不得低於0" }),
 });
 
-export default function CreateSellingExpenseForm() {
+export default function CreateSellingExpenseForm({ onCloseModal }) {
   const popOverRef = useRef(null);
   const { settings, isLoadingSettings } = useSettings();
   const { products, isLoadingProducts } = useProductsList();
@@ -113,7 +113,8 @@ export default function CreateSellingExpenseForm() {
 
     createExpense({ newExpense, newExpenseItems });
 
-    // console.log(newExpenseItems);
+    form.reset();
+    onCloseModal();
   }
 
   return (
@@ -290,8 +291,8 @@ export default function CreateSellingExpenseForm() {
           </div>
         </div>
 
-        <Button type="submit" className="w-full">
-          SendIcon invites
+        <Button type="submit" className="w-full" disabled={isCreating}>
+          新增支出
         </Button>
       </form>
     </Form>

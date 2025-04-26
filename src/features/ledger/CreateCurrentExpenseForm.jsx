@@ -175,7 +175,7 @@ export default function CreateCurrentExpenseForm({ onCloseModal }) {
         </div>
 
         <Button type="submit" className="w-full" disabled={isCreating}>
-          submit
+          新增支出
         </Button>
       </form>
     </Form>

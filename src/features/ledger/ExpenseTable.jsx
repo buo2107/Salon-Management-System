@@ -9,12 +9,11 @@ import {
 } from "@/components/ui/table";
 import Spinner from "@/ui/Spinner";
 import { useExpenses } from "./useExpenses";
-import { Button } from "@/components/ui/button";
-import { GripHorizontal } from "lucide-react";
 import { formatCurrency } from "@/utils/helpers";
 import { Badge } from "@/components/ui/badge";
 import { useExpenseItem } from "./useExpenseItem";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import ExpenseTableMenu from "./ExpenseTableMenu";
 
 function ExpenseTable() {
   const { expenses, isLoading } = useExpenses();
@@ -78,9 +77,7 @@ function ExpenseTable() {
                 {formatCurrency(expense.amount)}
               </TableCell>
               <TableCell className="text-center">
-                <Button size="icon" variant="ghost">
-                  <GripHorizontal />
-                </Button>
+                <ExpenseTableMenu id={expense.id} />
               </TableCell>
             </TableRow>
           ))}
