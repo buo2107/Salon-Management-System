@@ -227,8 +227,6 @@ export default function CreateSellingExpenseForm({ onCloseModal }) {
                     }
                   />
                 </div>
-
-                {/* 只能從最後一項開始刪除商品(BUG-若從中間項刪除，實際數據正確但UI顯示與實際數據有出入) */}
                 <div
                   className={`${index === 0 || index !== blocks.length - 1 ? "hidden" : ""}`}
                 >

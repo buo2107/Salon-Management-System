@@ -26,12 +26,11 @@ function ProductTable() {
             <Table>
               <TableHeader>
                 <TableRow className="text-sm *:text-center">
-                  <TableHead>名稱</TableHead>
+                  <TableHead width={200}>名稱</TableHead>
                   <TableHead>類別</TableHead>
                   <TableHead>品牌</TableHead>
                   <TableHead>規格</TableHead>
                   <TableHead>售價</TableHead>
-                  <TableHead>上次進貨日期</TableHead>
                   <TableHead>庫存</TableHead>
                   <TableHead></TableHead>
                 </TableRow>
@@ -77,7 +76,6 @@ function ProductTable() {
                           {formatCurrency(product.price)}
                         </span>
                       </TableCell>
-                      <TableCell></TableCell>
                       <TableCell>
                         <span className="font-semibold">{product.stock}</span>
                       </TableCell>

@@ -7,12 +7,16 @@ import DeleteAlert from "@/ui/DeleteAlert";
 import { useDeleteProduct } from "./useDeleteProduct";
 import CreateProductForm from "./CreateProductForm";
 import { useState } from "react";
+import CreateSellingExpenseForm from "../ledger/CreateSellingExpenseForm";
 
 function ProductTableMenu({ data }) {
-  const [open, setOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [stockInOpen, setStockInOpen] = useState(false);
+  const [stockOutOpen, setStockOutOpen] = useState(false);
   const { deleteProduct } = useDeleteProduct();
+
   return (
-    <Modal open={open} onOpenChange={setOpen}>
+    <Modal open={editOpen} onOpenChange={setEditOpen}>
       <DeleteAlert>
         <Menu>
           <Menu.Trigger>
@@ -21,26 +25,28 @@ function ProductTableMenu({ data }) {
             </Button>
           </Menu.Trigger>
           <Menu.Content>
-            <DropdownMenuItem
-              className={data.catagory === "技術" ? "hidden" : ""}
-            >
-              <Button variant="ghost" className="w-full justify-start">
+            <DropdownMenuItem>
+              <Button
+                variant="ghost"
+                className="w-full justify-start"
+                onClick={() => setStockInOpen(true)}
+              >
                 <PackagePlus />
                 進貨
               </Button>
             </DropdownMenuItem>
-            <DropdownMenuItem
-              className={data.catagory === "技術" ? "hidden" : ""}
-            >
-              <Modal.Trigger>
-                <Button variant="ghost" className="w-full justify-start">
-                  <PackageMinus />
-                  退貨
-                </Button>
-              </Modal.Trigger>
+            <DropdownMenuItem>
+              <Button
+                variant="ghost"
+                className="w-full justify-start"
+                onClick={() => setStockOutOpen(true)}
+              >
+                <PackageMinus />
+                退貨
+              </Button>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Modal.Trigger>
+              <Modal.Trigger id="edit">
                 <Button variant="ghost" className="w-full justify-start">
                   <Edit />
                   修改資料
@@ -52,11 +58,30 @@ function ProductTableMenu({ data }) {
             </DropdownMenuItem>
           </Menu.Content>
         </Menu>
-        <Modal.Window>
-          <CreateProductForm
-            productToUpdate={data}
-            onCloseModal={() => setOpen(false)}
-          />
+
+        {/* 進貨 Modal */}
+        <Modal open={stockInOpen} onOpenChange={setStockInOpen}>
+          <Modal.Window>
+            <CreateSellingExpenseForm
+              product={data}
+              onCloseModal={() => setStockInOpen(false)}
+            />
+          </Modal.Window>
+        </Modal>
+
+        {/* 退貨 Modal */}
+        <Modal open={stockOutOpen} onOpenChange={setStockOutOpen}>
+          <Modal.Window>
+            {/* <StockOutForm
+              product={data}
+              onCloseModal={() => setStockOutOpen(false)}
+            /> */}
+          </Modal.Window>
+        </Modal>
+
+        {/* 修改產品 Modal */}
+        <Modal.Window id="edit">
+          <CreateProductForm onCloseModal={() => setEditOpen(false)} />
         </Modal.Window>
         <DeleteAlert.Window onConfirm={() => deleteProduct(data.id)} />
       </DeleteAlert>
