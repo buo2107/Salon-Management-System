@@ -20,8 +20,10 @@ function Trigger() {
   return (
     <AlertDialogTrigger asChild>
       <Button variant="ghost" className="w-full justify-start">
-        <Trash2 />
-        刪除資料
+        <div className="flex items-center gap-2 text-destructive focus:text-destructive">
+          <Trash2 />
+          刪除資料
+        </div>
       </Button>
     </AlertDialogTrigger>
   );
